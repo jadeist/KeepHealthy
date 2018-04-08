@@ -1,0 +1,15 @@
+@import '../libs/vars';
+@import '../libs/functions';
+@import '../libs/mixins';
+
+/* Icon */
+
+	.icon {
+		@include icon;
+		border-bottom: none;
+		position: relative;
+
+		> .label {
+			display: none;
+		}
+	}
