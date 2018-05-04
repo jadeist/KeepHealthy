@@ -2,9 +2,6 @@
 @import '../libs/functions';
 @import '../libs/mixins';
 
-
-/* Basic */
-
 	// MSIE: Required for IEMobile.
 		@-ms-viewport {
 			width: device-width;
@@ -25,8 +22,6 @@
 	body {
 		background: _palette(bg);
 
-		// Prevents animation/transition "flicker" on page load.
-		// Automatically added/removed by js/main.js.
 			&.is-loading {
 				*, *:before, *:after {
 					@include vendor('animation', 'none !important');

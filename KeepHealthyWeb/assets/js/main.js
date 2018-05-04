@@ -15,7 +15,7 @@
 		var	$window = $(window),
 			$body = $('body');
 
-		//Desactivar animaciones
+		//Desactivar animaciones y trancisiones
 			$body.addClass('is-loading');
 
 			$window.on('load', function() {
@@ -24,10 +24,10 @@
 				}, 100);
 			});
 
-		//Fix- Error del placeholder
+		//Arreglo del placeholder
 			$('form').placeholder();
 
-		//Elementos importantes
+		// Priorizacion de elementos
 			skel.on('+medium -medium', function() {
 				$.prioritize(
 					'.important\\28 medium\\29',
@@ -48,49 +48,6 @@
 					side: 'right'
 				});
 
-				//Scroll suve Tenorio
-		     $('a[href*=#]').click(function() {
- 
-				     if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
-				         && location.hostname == this.hostname) {
-	
-				             var $target = $(this.hash);
-	
-				             $target = $target.length && $target || $('[name=' + this.hash.slice(1) +']');
-	
-				             if ($target.length) {
-	
-				                 var targetOffset = $target.offset().top;
-	
-				                 $('html,body').animate({scrollTop: targetOffset}, 1000);
-	
-				                 return false;
-	
-				            }
-	
-				  }
-			//Scroll suve Tenorio
-			 $('a[href*=#]').click(function() {
-	
-				     if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
-				         && location.hostname == this.hostname) {
-	
-				             var $target = $(this.hash);
-	
-				             $target = $target.length && $target || $('[name=' + this.hash.slice(1) +']');
-	
-				             if ($target.length) {
-	
-				                 var targetOffset = $target.offset().top;
-	
-				                 $('html,body').animate({scrollTop: targetOffset}, 1000);
-	
-				                 return false;
-	
-				            }
-	
-				  }
-			 });
 	});
 
 })(jQuery);

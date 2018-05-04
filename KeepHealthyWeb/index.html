@@ -1,28 +1,32 @@
-<!DOCTYPE HTML>
 <html>
 	<head>
-		<title>KeepHealthy | Inicio</title>
+		<title>KeepHealthy | Inicio </title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	    <link rel="stylesheet" href="assets/css/bootstrap.css">
 	</head>
-	<body class="landing">
-			<header id="header" class="alt">
-				<h1><a href="index.html">KeepHealthy</a></h1>
-				<a href="#nav">Menu</a>
-			</header>
 
-		<!-- Nav -->
-			<nav id="nav">
-				<ul class="links">
-					<li><a href="index.html">Inicio</a></li>
-					<li><a href="#">Inicia Sesion</a></li>
-					<li><a href="#">Conocenos</a></li>
-				</ul>
-			</nav>
+	<body class="landing">
+		<header id="navmain-header">
+			<div class="container">
+			    <nav class="navbar navbar-default">
+		        	<div class="navbar-header">
+						<a href="#" class="js-navmain-nav-toggle navmain-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+		         		<a class="navbar-brand" href="index.html">KeepHealthy</a>
+		    		</div>
+		    		<div id="navbar" class="navbar-collapse collapse">
+		        		<ul class="nav navbar-nav navbar-right">
+		        			<li class="active"><a href="#"><span>Inicio</span></a></li>
+		            		<li><a href="#"><span> Conocenos </span></a></li>
+		            		<li><a href="#four"><span>Registrate</span></a></li>
+                    		<li><a href="#"><span> Inicia Sesion </span></a></li>
+		        		</ul>
+		    		</div>
+				</nav>
+		  	</div>
+		</header>
+
 			<section id="banner">
 				<h2>¡Encuentra el balance en tu vida!</h2>
 				<p>Elige comer sano mientras pierdes peso, gana energia y concentracion  <b>KeepHealthy</b> te ayudara a lograrlo</p>
@@ -70,25 +74,23 @@
 					</header>
 					<form action="#" method="POST">
 						<div class="container 75%">
+							<div class="row uniform 50%">
 								<div class="6u 12u$(xsmall)">
 									<input name="nombre" placeholder="Nombre" type="text" />
 								</div>
-								<br>
 								<div class="6u$ 12u$(xsmall)">
 									<input name="email" placeholder="Email" type="email" />
 								</div>
-								<br>
 								<div class="6u$ 12u$(xsmall)">
 									<input name="password" placeholder="Contraseña" type="password" />
 								</div>
-								<br>
 								<div class="6u$ 12u$(xsmall)">
 									<input name="passwordx" placeholder="Repite la contraseña" type="password" />
 								</div>
-								<br>
+							</div>
 						</div>
 						<ul class="actions">
-							<li><input type="submit" class="special" value="REGISTRARME" />
+							<li><input type="submit" class="special" value="RESGISTRARME" />
 							</li>
 						</ul>
 					</form>
@@ -111,12 +113,10 @@
 				</div>
 			</footer>
 
-		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-
+			<script src="assets/js/bootstrap.min.js"></script>
 	</body>
 </html>
