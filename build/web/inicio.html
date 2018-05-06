@@ -1,0 +1,206 @@
+<html>
+	<head>
+		<title>KeepHealthy | Inicio </title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	    <link rel="stylesheet" href="assets/css/bootstrap.css">
+	</head>
+
+	<body class="landing">
+
+		<header id="navmain-header">
+			<div class="container">
+				<nav class="navbar navbar-default">
+		        	<div class="navbar-header">
+						<a href="#" class="js-navmain-nav-toggle navmain-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+		         		<a class="navbar-brand" href="index.html">KeepHealthy</a>
+		        	</div>
+		        	<div id="navbar" class="navbar-collapse collapse">
+		          		<ul class="nav navbar-nav navbar-right">
+		            		<li class="active"><a href="inicio.html"><span>Inicio</span></a></li>
+		            		<li><a href="mimenu.html"><span>Mi Menu</span></a></li>
+		            		<li><a href="perfil.html"><span>Perfil</span></a></li>
+		            		<li><a href="index.html"><span>Cerrar Sesion</span></a></li>		          
+		        		</ul>
+		        	</div>
+			    </nav>
+		  	</div>
+		</header>
+
+		<section class="wrapper style2">
+			<br>				
+			<div class="inner">
+				<div class="content">
+					<h3>Mi menu de hoy</h3>
+					<p>Recuerda seguir tu menu diario para obtener mejores resultados</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="wrapper style1" style="margin: 1em; padding: 1em;">
+			<div class="content">
+				<div class="table-wrapper">
+					<table class="alt">
+						<thead>
+							<tr>
+								<th>Comida</th>
+								<th>Descripcion</th>
+								<th>Hora</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Desayuno</td>
+								<td>
+									<ul>
+										<li><b>Sandwich:</b> Dos panes integrales, mayonesa baja en grasa, jamon de pierna de pavo y una rebanada de queso panela.</li>
+										<li><b>Fruta:</b> Puede ser una naranja, una manzana o una pera. </li>
+										<li><b>Agua:</b> Un vaso de agua o té sin azucar.</li>
+									</ul>
+								</td>
+								<td>9:00 AM</td>
+							</tr>
+							<tr>
+								<td>Almuerzo</td>
+								<td>
+									<ul>
+										<li><b>Galletas:</b> Tres galletas saladas acompañadas de una cucharada de queso crema.</li>
+										<li><b>Lacteo:</b> Puede ser un vaso de leche o un vaso de yogurth</li>
+										<li><b>Agua:</b> Un vaso de agua o té sin azucar.</li>
+									</ul>
+								</td>
+								<td>12 AM</td>
+							</tr>
+							<tr>
+								<td>Comida</td>
+								<td>
+									<ul>
+										<li><b>Sopa:</b> Caldo de pollo o consome, con o sin verduras.</li>
+										<li><b>Plato fuerte:</b> Una rebanada de lasagna vegetariana.</li>
+										<li><b>Agua:</b> Un vaso de agua o té sin azucar.</li>
+									</ul>
+								</td>
+								<td>2:30 PM</td>
+							</tr>
+							<tr>
+								<td>Merienda</td>
+								<td>
+									<ul>
+										<li><b>Galletas:</b> Tres galletas saladas acompañadas de una cucharada de queso crema.</li>
+										<li><b>Lacteo:</b> Puede ser un vaso de leche o un vaso de yogurth</li>
+										<li><b>Agua:</b> Un vaso de agua o té sin azucar.</li>
+									</ul>
+								</td>
+								<td>18:00 PM</td>
+							</tr>
+							<tr>
+								<td>Cena</td>
+								<td>
+									<ul>
+										<li><b>Fruta:</b> Puede ser una naranja, una manzana o una pera. </li>
+										<li><b>Lacteo:</b> Puede ser un vaso de leche o un vaso de yogurth</li>
+										<li><b>Agua:</b> Un vaso de agua o té sin azucar.</li>
+									</ul>
+								</td>
+								<td>21:30 PM</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>			
+		</section>
+
+		<section class="wrapper special" style="margin: 1em; padding: 1em;">
+			<div class="row">
+				<div class="6u 12u$(xsmall)" style="padding:2em">
+					<h4>Progreso semanal</h4>
+					<p>¡Mira lo mucho que has logrado!</p>
+					<canvas id="myChart" class="chart"></canvas>				
+				</div>
+				<div class="6u$ 12u$(xsmall)" style="padding:2em">
+					<div class="wrapper style1">
+						<h4>Registro de Resultados</h4>
+						<p>Es necesario que ingreses aqui tus datos para poder adaptarnos a tus necesidades</p>
+						<form method="post" action="#">
+							<div class="row uniform 50%" style="padding-right:1.7em, padding-left:1.7em">
+								<div class="10u$ 12u$">
+									<input type="text" placeholder="Peso perdido (ej. 5kg)"/>
+								</div>
+								<br>
+								<div style="display: run-in">
+								<p> ¿Que le ha parecido el regimen semanal?</p>
+								<div class="4u$ 10u$(xsmall)">
+									<input type="radio" />
+									<label>Bueno</label>
+								</div>
+								<br>
+								<div class="4u$ 10u$(xsmall)">
+									<input type="radio" />
+									<label>Regular</label>	
+								</div>	
+								<br>							
+								<div class="4u$ 10u$(xsmall)">
+									<input type="radio" />
+									<label>Malo</label>
+								</div>
+							</div>
+							<br>
+							<div class="10u$">
+								<textarea placeholder="Notas: (ej. Descanse mas, menos inflamacion)" rows="4"></textarea>
+							</div>
+							<div class="10u$">
+								<ul>
+									<li><input type="submit" value="Enviar" class="special" /></li>
+								</ul>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>			
+		</section>
+
+		<footer id="footer">
+			<div class="inner">
+				<ul class="icons">
+					<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+				</ul>
+				<ul class="copyright">
+						<li>&copy; TYFONWARE 2018.</li>
+				</ul>
+			</div>
+		</footer>
+
+		<!-- Script de la Grafica-->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+			<script>
+    			var ctx = document.getElementById('myChart').getContext('2d');
+    			var chart = new Chart(ctx, {
+        		// The type of chart we want to create
+        		type: 'line',
+
+        		// The data for our dataset
+        		data: {
+            	labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"],
+            	datasets: [{
+                	label: "Progreso Semanal",
+                	backgroundColor: 'rgb(255, 99, 132)',
+                	borderColor: 'rgb(255, 99, 132)',
+                	data: [0, 10, 5, 2, 20, 30, 45],
+            		}]
+        		},
+
+        		// Configuration options go here
+        		options: {}
+    			});
+			</script>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		
+	</body>
+</html>
