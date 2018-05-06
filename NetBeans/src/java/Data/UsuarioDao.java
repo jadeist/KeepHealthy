@@ -25,7 +25,7 @@ public class UsuarioDao {
     public static Connection getConnection(){
         String url,UserName,password;
          
-        url="jdbc:mysql://localhost/keephealthy";
+        url="jdbc:mysql://localhost/KeepHealthyDB";
         UserName="root";
         password="n0m3l0";
         
@@ -60,7 +60,7 @@ public class UsuarioDao {
         try{
         Connection con=UsuarioDao.getConnection();
         String q;
-        q="insert into Usuario(Nickname, Contrasena , idperfil, nombreUsuario, idsexo , FechaNacimiento, pesoUsuario, Estatura, Ocupacion, idActividad, FechaRegistro, FechaUltVez , CaloriasDiarias ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        q="insert into Usuario(Nickname, Contrasena , idperfil, nombreUsuario, idsexo , FechaNacimiento, pesoUsuario, Estatura, Ocupacion, idActividad, FechaRegistro, FechaUltVez , CaloriasDiarias ) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         
         PreparedStatement ps =con.prepareStatement(q);
         
@@ -69,13 +69,13 @@ public class UsuarioDao {
         ps.setInt(3,u.getIdperfil());
         ps.setString(4,u.getNombreUsuario());
         ps.setInt(5,u.getIdsexo());
-        ps.setString(6,u.getFechaNacimiento());
+        ps.setDate(6,u.getFechaNacimiento());
         ps.setFloat(7,u.getPesoUsuario());
         ps.setFloat(8,u.getEstatura());
         ps.setString(9,u.getOcupacion());
         ps.setInt(10,u.getIdActividad());
-        ps.setString(11,u.getFechaRegistro());
-        ps.setString(12,u.getFechaUltVez());
+        ps.setDate(11,u.getFechaRegistro());
+        ps.setDate(12,u.getFechaUltVez());
         ps.setFloat(13,u.getCaloriasDiarias());
         
         estatus=ps.executeUpdate();
@@ -121,13 +121,13 @@ public class UsuarioDao {
         ps.setInt(3,u.getIdperfil());
         ps.setString(4,u.getNombreUsuario());
         ps.setInt(5,u.getIdsexo());
-        ps.setString(6,u.getFechaNacimiento());
+        ps.setDate(6,u.getFechaNacimiento());
         ps.setFloat(7,u.getPesoUsuario());
         ps.setFloat(8,u.getEstatura());
         ps.setString(9,u.getOcupacion());
         ps.setInt(10,u.getIdActividad());
-        ps.setString(11,u.getFechaRegistro());
-        ps.setString(12,u.getFechaUltVez());
+        ps.setDate(11,u.getFechaRegistro());
+        ps.setDate(12,u.getFechaUltVez());
         ps.setFloat(13,u.getCaloriasDiarias());
         ps.setInt(14,u.getIdUsuario());
         
@@ -197,13 +197,13 @@ public class UsuarioDao {
             u.setIdperfil(rs.getInt(4));
             u.setNombreUsuario(rs.getString(5));
             u.setIdsexo(rs.getInt(6));
-            u.setFechaNacimiento(rs.getString(7));
+            u.setFechaNacimiento(rs.getDate(7));
             u.setPesoUsuario(rs.getFloat(8));
             u.setEstatura(rs.getFloat(9));
             u.setOcupacion(rs.getString(10));
             u.setIdActividad(rs.getInt(11));
-            u.setFechaRegistro(rs.getString(12));
-            u.setFechaUltVez(rs.getString(13));
+            u.setFechaRegistro(rs.getDate(12));
+            u.setFechaUltVez(rs.getDate(13));
             u.setCaloriasDiarias(rs.getFloat(14));
             
         }
@@ -247,13 +247,13 @@ public class UsuarioDao {
             u.setIdperfil(rs.getInt(4));
             u.setNombreUsuario(rs.getString(5));
             u.setIdsexo(rs.getInt(6));
-            u.setFechaNacimiento(rs.getString(7));
+            u.setFechaNacimiento(rs.getDate(7));
             u.setPesoUsuario(rs.getFloat(8));
             u.setEstatura(rs.getFloat(9));
             u.setOcupacion(rs.getString(10));
             u.setIdActividad(rs.getInt(11));
-            u.setFechaRegistro(rs.getString(12));
-            u.setFechaUltVez(rs.getString(13));
+            u.setFechaRegistro(rs.getDate(12));
+            u.setFechaUltVez(rs.getDate(13));
             u.setCaloriasDiarias(rs.getFloat(14));
             
         }
@@ -298,13 +298,13 @@ public class UsuarioDao {
                 u.setIdperfil(rs.getInt(4));
                 u.setNombreUsuario(rs.getString(5));
                 u.setIdsexo(rs.getInt(6));
-                u.setFechaNacimiento(rs.getString(7));
+                u.setFechaNacimiento(rs.getDate(7));
                 u.setPesoUsuario(rs.getFloat(8));
                 u.setEstatura(rs.getFloat(9));
                 u.setOcupacion(rs.getString(10));
                 u.setIdActividad(rs.getInt(11));
-                u.setFechaRegistro(rs.getString(12));
-                u.setFechaUltVez(rs.getString(13));
+                u.setFechaRegistro(rs.getDate(12));
+                u.setFechaUltVez(rs.getDate(13));
                 u.setCaloriasDiarias(rs.getFloat(14));
                lista.add(u);
         }
@@ -348,13 +348,13 @@ public class UsuarioDao {
             u.setIdperfil(rs.getInt(4));
             u.setNombreUsuario(rs.getString(5));
             u.setIdsexo(rs.getInt(6));
-            u.setFechaNacimiento(rs.getString(7));
+            u.setFechaNacimiento(rs.getDate(7));
             u.setPesoUsuario(rs.getFloat(8));
             u.setEstatura(rs.getFloat(9));
             u.setOcupacion(rs.getString(10));
             u.setIdActividad(rs.getInt(11));
-            u.setFechaRegistro(rs.getString(12));
-            u.setFechaUltVez(rs.getString(13));
+            u.setFechaRegistro(rs.getDate(12));
+            u.setFechaUltVez(rs.getDate(13));
             u.setCaloriasDiarias(rs.getFloat(14));
         }else{
             u.setIdUsuario(0);

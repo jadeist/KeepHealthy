@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.sql.SQLException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,9 +39,10 @@ public class RegistrarUsuarioServlet extends HttpServlet {
             nombreUsuario=request.getParameter("nombreUsuario");
             SexoS=request.getParameter("SexoS");
             ActividadS=request.getParameter("ActividadS");
-            PesoS=request.getParameter("Peso");
+            PesoS=request.getParameter("PesoUsuario");
             EstaturaS=request.getParameter("Estatura");
             FechaNacimiento=request.getParameter("FechaNacimiento");
+            Ocupacion = request.getParameter("Ocupacion");
 
             String resultadonombre, resultadopassword;
             int res;
@@ -57,7 +61,8 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                 u=UsuarioDao.getUsuarioByNickname(Nickname);
 
                 if((u.getNickname())!=null){
-                        out.println("<!DOCTYPE html>");
+                    
+                    out.println("<!DOCTYPE html>");
                     out.println("<html>");
                     out.println("<head"
                             + " <meta charset='UTF-8'>");
@@ -69,11 +74,9 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                     out.println("<table bgcolor='CC6666' align='center'>"
                             + "<tr>"
                             + "<td>"
-                            + "<h1>Errores encontrados</h1>");                      
-                   
-                     out.println("Error : " + "Usuario Existente"+"<br>");
-                              
-                    out.println("<form action='Registro.html'>"
+                            + "<h1>Errores encontrados</h1>");     
+                    out.println("Error : " + "Usuario Existente"+"<br>");
+                    out.println("<form action='index.html#four'>"
                             + "<input type='submit' value='Inicio'>"
                             + "</form>"
                             + "</td>"
@@ -82,205 +85,190 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                             +"<script src='js/jquery.js'></script>"
                             +"<script src='js/bootstrap.min.js'></script>");
                     out.println("</body>");
-                    out.println("</html>");
+                    out.println("</html>");                    
                 }
                 else{
-                    //nombreUsuario,FechaNacimiento,Ocupacion,FechaUltVez,FechaRegistro,SexoS,ActividadS,PesoS,EstaturaS;
-                    String resultadonombreUsuario, resultadoOcupacion,resultadoEstatura,resultadoPeso,
-                            resultadoFechaNacimiento;
-                    resultadonombreUsuario = validanombreUsuario(nombreUsuario,50,1);                    
+                    res=0;
+                //nombreUsuario,FechaNacimiento,Ocupacion,FechaUltVez,FechaRegistro,SexoS,ActividadS,PesoS,EstaturaS;
+                    String resultadonombreUsuario, resultadoOcupacion,resultadoEstatura,resultadoPeso;
+                    resultadonombreUsuario = validanombreUsuario(nombreUsuario,50,1);  
                     if (resultadonombreUsuario!="OK")
                             res+=1;
+                   
                     resultadoOcupacion = validanombreUsuario(Ocupacion,20,1);
                     if (resultadoOcupacion!="OK")
                             res+=1;
+                    
                     resultadoEstatura = validanumerodecimal(EstaturaS,6,1);                    
                     if (resultadoEstatura!="OK")
                             res+=1;
+                    
                     resultadoPeso = validanumerodecimal(PesoS,6,1);
                     if (resultadoPeso!="OK")
                             res+=1;
                     
                     if(res==0){
+                        
                         Sexo s = new Sexo();
                         s = SexoDao.getSexoByName(SexoS);
                         idSexo = s.getIdSexo();
+                        
                         Actividad a = new Actividad();
                         a = ActividadDao.getActividadByName(ActividadS);
                         idActividad = a.getIdActividad();
+                        
                         Perfil p = new Perfil();
                         p = PerfilDao.getPerfilByName("Usuario");
                         idPerfil = p.getIdPerfil();
+                        
                         pesoUsuario = Float.parseFloat(PesoS);
                         Estatura = Float.parseFloat(EstaturaS);
-                        int Edad = 17;
+                        
+                        
+                         //FechaNacimiento                                                    
+                        //out.println("id FechaUltVez: " +FechaNacimiento);
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                        java.util.Date dateFechaNacimiento = formatter.parse(FechaNacimiento);
+                        java.sql.Date datesqlFechaNacimiento = new java.sql.Date(dateFechaNacimiento.getTime());
+                        
+                        int Edad= calculaEdad(dateFechaNacimiento);
+                        
                         //CaloriasDiarias
                         CaloriasDiarias = CalculaHarrisBenedict(pesoUsuario, Estatura, idSexo, idActividad, Edad);
-                        //FechaRegistro
-                         Calendar fecha = new GregorianCalendar();
-                         int año = fecha.get(Calendar.YEAR);
-                         int mes = fecha.get(Calendar.MONTH);
-                         int dia = fecha.get(Calendar.DAY_OF_MONTH);
-                         String años,mess,dias;
-                         años = String.valueOf(año);
-                         mess = String.valueOf(mes);
-                         dias = String.valueOf(dia);
-                         if(mess.length()<2){
-                             mess = "0" + mess;
-                         }
-                         if(dias.length()<2){
-                             dias = "0" + dias;
-                         }
-                         FechaRegistro = años + mess + dias; 
-                         
-                        //FechaNacimiento
-                         
-                        //FEchaUltVez
-                         FechaUltVez = "";
-                         
-                         u = new Usuario();
-                         
-                         u.setFechaUltVez(FechaUltVez);
-                         u.setIdsexo(idSexo);
-                         u.setNickname(Nickname);
-                         u.setNombreUsuario(nombreUsuario);
-                         u.setOcupacion(Ocupacion);
-                         u.setPesoUsuario(pesoUsuario);
-                         u.setIdActividad(idActividad);
-                         u.setIdperfil(idPerfil);
-                         u.setFechaRegistro(FechaRegistro);
-                         u.setFechaNacimiento(FechaNacimiento);
-                         u.setEstatura(Estatura);
-                         u.setContrasena(Contrasena);
-                         u.setCaloriasDiarias(CaloriasDiarias);
-                         int estatus = UsuarioDao.Guardar(u);
-                    }
-                 
+//                        out.println("id CaloriasDiarias: " +CaloriasDiarias);
+                        //FechaRegistro                  
+                        java.util.Date d = new java.util.Date();  
+                        java.sql.Date date2 = new java.sql.Date(d.getTime());
+                       
+                        u = new Usuario();
+
+                        u.setNickname(Nickname);
+                        u.setContrasena(Contrasena);
+                        u.setIdperfil(idPerfil);                        
+                        u.setNombreUsuario(nombreUsuario);                        
+                        u.setIdsexo(idSexo);    
+                        u.setFechaNacimiento(datesqlFechaNacimiento);                                              
+                        u.setPesoUsuario(pesoUsuario);
+                        u.setEstatura(Estatura);
+                        u.setOcupacion(Ocupacion);
+                        u.setIdActividad(idActividad);
+                        u.setFechaRegistro(date2);                                        
+                        u.setFechaUltVez(date2);                        
+                        u.setCaloriasDiarias(CaloriasDiarias);
+                        
                         int estatus = UsuarioDao.Guardar(u);
                         HttpSession sesion=request.getSession();
                         if(estatus>0){
-                           
-                            /* 
+    /* 
                             getRequestDispatcher se encarga de redireccionar un evento establecido por
                             parte del back ened, de modo que el usuario nunca ve el proceso de 
                             dicha accion
                             */
-                            u=UsuarioDao.getUsuarioByNombre(usu);
-                            if(u.getUsuario()!=null){
-                               
-                               e.setId_usuario(u.getId_usuario());
-                               
-                               estatus = EstadoDao.Actualizar(e);  
-                               sesion=request.getSession();
-                               
-                               if (estatus>0){
-                                    out.println("<!DOCTYPE html>");
-                                    out.println("<html>");
-                                    out.println("<head"
-                                            + " <meta charset='UTF-8'>");
-                                    out.println("<title>Insertar Alumno</title>"
-                                             + "<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimm-scale=1.0'>"
-                                             + "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\"/>");            
-                                    out.println("</head>");
-                                    out.println("<body>");
-                                    out.println("<table bgcolor='CC6666' align='center'>"
-                                            + "<tr>"
-                                            + "<td>"
-                                            + "<h1>Secretario reigistrado con exito</h1>");                      
-
-                                     out.println("Se le asigno la ciudad de: "+e.getNombreestado()+"<br>");
-
-                                    out.println("<form action='Registro.html'>"
-                                            + "<input type='submit' value='Inicio'>"
-                                            + "</form>"
-                                            + "</td>"
-                                            + "</tr>"
-                                            + "</table>"
-                                            +"<script src='js/jquery.js'></script>"
-                                            +"<script src='js/bootstrap.min.js'></script>");
-                                    out.println("</body>");
-                                    out.println("</html>");
-                               }
-
-                            }
-                            else{                               
-                                out.println("error actualiza");
-                            }
-                            
-                            
+                            out.println("<!DOCTYPE html>");
+                            out.println("<html>");
+                            out.println("<head"
+                                    + " <meta charset='UTF-8'>");
+                            out.println("<title>KeepHealthy</title>"
+                                     + "<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimm-scale=1.0'>"
+                                     + "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\"/>");            
+                            out.println("</head>");
+                            out.println("<body>");
+                            out.println("<table bgcolor='CC6666' align='center'>"
+                                    + "<tr>"
+                                    + "<td>"
+                                    + "<h1>Usuario reigistrado con exito</h1>");                                                   
+                            out.println("<form action='inicio.html'>"
+                                    + "<input type='submit' value='Inicio'>"
+                                    + "</form>"
+                                    + "</td>"
+                                    + "</tr>"
+                                    + "</table>"
+                                    +"<script src='js/jquery.js'></script>"
+                                    +"<script src='js/bootstrap.min.js'></script>");
+                            out.println("</body>");
+                            out.println("</html>");
                         }
-                        else{                            
-                            out.println("No se guardo nada");
+                        else{                               
+                            out.println("error actualiza");
                         }
                         out.close();                                                
                     }
-                    else{
-                            
+                    else{  //SEGUNDOS ERRORES
+                        
                         out.println("<!DOCTYPE html>");
                         out.println("<html>");
                         out.println("<head"
-                            + " <meta charset='UTF-8'>");
-                        out.println("<title>Insertar Alumno</title>"
-                             + "<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimm-scale=1.0'>"
-                             + "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\"/>");            
+                                + " <meta charset='UTF-8'>");
+                        out.println("<title>KeepHealthy</title>"
+                                 + "<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimm-scale=1.0'>"
+                                 + "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\"/>");            
                         out.println("</head>");
                         out.println("<body>");
                         out.println("<table bgcolor='CC6666' align='center'>"
-                            + "<tr>"
-                            + "<td>"
-                            + "<h1>Errores encontrados</h1>");                      
+                                + "<tr>"
+                                + "<td>"
+                                + "<h1>Errores encontrados</h1>");     
+                        if (resultadonombreUsuario!="OK")
+                            out.println("Error en Nombre Usuario: " + resultadonombreUsuario+"<br>");
+                    
+                        if (resultadoOcupacion!="OK")
+                            out.println("Error en Ocupacion Usuario: " + resultadoOcupacion+"<br>");
+                                      
+                        if (resultadoEstatura!="OK")
+                            out.println("Error en Estatura: " + resultadoEstatura+"<br>");
                    
-                        out.println("Error : " + "No hay Ciudades disponibles, debe eliminar un Secretario"+"<br>");
-                              
-                        out.println("<form action='Registro.html'>"
-                            + "<input type='submit' value='Inicio'>"
-                            + "</form>"
-                            + "</td>"
-                            + "</tr>"
-                            + "</table>"
-                            +"<script src='js/jquery.js'></script>"
-                            +"<script src='js/bootstrap.min.js'></script>");
+                        if (resultadoPeso!="OK")
+                            out.println("Error en Peso: " + resultadoPeso+"<br>");
+                        
+                        out.println("<form action='index.html#four'>"
+                                + "<input type='submit' value='Inicio'>"
+                                + "</form>"
+                                + "</td>"
+                                + "</tr>"
+                                + "</table>"
+                                +"<script src='js/jquery.js'></script>"
+                                +"<script src='js/bootstrap.min.js'></script>");
                         out.println("</body>");
-                        out.println("</html>");
+                        out.println("</html>");                                 
                     }
-                    
                 }
-                    
-            }else{
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head"
-                            + " <meta charset='UTF-8'>");
-                    out.println("<title>Insertar Alumno</title>"
-                             + "<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimm-scale=1.0'>"
-                             + "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\"/>");            
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<table bgcolor='CC6666' align='center'>"
-                            + "<tr>"
-                            + "<td>"
-                            + "<h1>Errores encontrados</h1>");                      
-                    if (resultadonombre!="OK"){
-                        out.println("Error en campo Nombre: " + resultadonombre+"<br>");
-                    }                  
-                    if (resultadopassword!="OK"){
-                        out.println("Error en campo Password: " + resultadopassword+"<br>");
-                    }                 
-                    out.println("<form action='Registro.html'>"
-                            + "<input type='submit' value='Inicio'>"
-                            + "</form>"
-                            + "</td>"
-                            + "</tr>"
-                            + "</table>"
-                            +"<script src='js/jquery.js'></script>"
-                            +"<script src='js/bootstrap.min.js'></script>");
-                    out.println("</body>");
-                    out.println("</html>");
-                
-            } 
-            
+            }
+            else{
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head"
+                        + " <meta charset='UTF-8'>");
+                out.println("<title>KeepHealthy</title>"
+                         + "<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimm-scale=1.0'>"
+                         + "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\"/>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<table bgcolor='CC6666' align='center'>"
+                        + "<tr>"
+                        + "<td>"
+                        + "<h1>Errores encontrados</h1>");     
+                if (resultadonombre!="OK"){
+                    out.println("Error en campo Nickname: " + resultadonombre+"<br>");
+                }                  
+                if (resultadopassword!="OK"){
+                    out.println("Error en campo Password: " + resultadopassword+"<br>");
+                }       
+
+                out.println("<form action='index.html#four'>"
+                                + "<input type='submit' value='Inicio'>"
+                                + "</form>"
+                                + "</td>"
+                                + "</tr>"
+                                + "</table>"
+                                +"<script src='js/jquery.js'></script>"
+                                +"<script src='js/bootstrap.min.js'></script>");
+                out.println("</body>");
+                out.println("</html>");                                                                       
+            }             
         } catch (SQLException ex) {
-            Logger.getLogger(GuardarSecretario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistrarUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(RegistrarUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -362,7 +350,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                             }                          
                         }                    
                         if (allvalido == false){
-                            Error = "Solo se permiten letras en este campo";
+                            Error = "Solo se permiten letras y espacio en este campo";
                         }
                         else{
                             Error ="OK";                    
@@ -556,6 +544,57 @@ public class RegistrarUsuarioServlet extends HttpServlet {
         }
          return Error; 
     }
+    public int calculaEdad(java.util.Date  fecha2){
+      
+   
+        java.util.Date d = new java.util.Date();  
+        
+        SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
+        SimpleDateFormat sdfd = new SimpleDateFormat("dd");
+        SimpleDateFormat sdfM = new SimpleDateFormat("MM");
+        String ahora_anio = sdfy.format(d);
+        String ahora_mes = sdfM.format(d);
+        String ahora_dia = sdfd.format(d);
+        
+        String anio = sdfy.format(fecha2);
+        String mes = sdfM.format(fecha2);
+        String dia = sdfd.format(fecha2);
+        int ianio = Integer.parseInt(anio);
+        int imes = Integer.parseInt(mes);
+        int idia = Integer.parseInt(dia);
+        int iahora_anio = Integer.parseInt(ahora_anio);
+        int iahora_mes = Integer.parseInt(ahora_mes);
+        int iahora_dia = Integer.parseInt(ahora_dia);
+        
+        int edad = (iahora_anio + 1900) - ianio;    	
+        if ( iahora_mes < imes )
+            edad--;        
+        if ((imes == iahora_mes) && (iahora_dia < idia))
+            edad--;       
+        if (edad > 1900)
+            edad -= 1900;
+        int  meses=0;
+        
+        if(iahora_mes>imes)
+            meses=iahora_mes-imes;
+        if(iahora_mes<imes)
+            meses=12-(imes-iahora_mes);
+        
+        if(idia>iahora_dia)  //((iahora_mes==imes) && (idia>iahora_dia))
+            meses=11;
+ 	int dias=0;
+        if(iahora_dia>idia)
+           dias=iahora_dia-idia;
+        if(iahora_dia<idia){           
+            //java.util.Date ultimoDiaMes=new java.util.Date(iahora_anio, iahora_mes, 0);
+           // dias=ultimoDiaMes.getDate()-(idia-iahora_dia);
+        }
+    //document.registro.totaledad.value = "Tienes "+edad+" años, "+meses+" meses y "+dias+" días";
+        return edad;
+    }
+           	
+        
+ 
     public Float CalculaHarrisBenedict(float peso, float estatura, int sexo, int actividad, int Edad) throws ServletException{
         float Calorias=0;
         try{                        

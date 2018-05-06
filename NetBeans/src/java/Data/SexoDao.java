@@ -1,5 +1,6 @@
 package Data;
 
+import Data.*;
 import static java.lang.System.out;
 import java.util.*;
 import java.sql.*;
@@ -24,7 +25,7 @@ public class SexoDao {
     public static Connection getConnection(){
         String url,UserName,password;
          
-        url="jdbc:mysql://localhost/keephealthy";
+        url="jdbc:mysql://localhost/keephealthydb";
         UserName="root";
         password="n0m3l0";
         
@@ -127,42 +128,35 @@ public class SexoDao {
     
       public static  Sexo getSexoByName(String descripcion) throws SQLException{
         
-        Sexo u=new Sexo();
-        
-        
+        Sexo u=new Sexo();                
         /*Es necesrio contar con un estado
         de la tabla de la bd para saber si el empleado
         que voy a registrar es nuevo o no */
         try{
-        Connection con=SexoDao.getConnection();
-        String q;
-        q="Select * from Sexo where descripcionSexo=?";
-        
-        PreparedStatement ps =con.prepareStatement(q);
-        
-        ps.setString(1, descripcion);
-        
-        ResultSet rs=ps.executeQuery();
-       
-        if(rs.next()){
-           
-            u.setIdSexo(rs.getInt(1));
-            u.setDescripcionSexo(rs.getString(2));
-        }
-        else{
-            out.println("Sexo no encontrado");
-        }
-        
-        con.close();
-        
-        
-        }catch(Exception d){
+            Connection con=SexoDao.getConnection();
+            String q;
+            q="Select idSexo,descripcionSexo from Sexo where descripcionSexo=?";
+
+            PreparedStatement ps =con.prepareStatement(q);
+
+            ps.setString(1, descripcion);
+
+            ResultSet rs=ps.executeQuery();
+
+            if(rs.next()){          
+                u.setIdSexo(rs.getInt(1));
+                u.setDescripcionSexo(rs.getString(2));
+            }
+            else{               
+                 System.out.println("Sexo no encontrado");
+            }
+            con.close();                
+        }catch(Exception d){            
             System.out.println("Error");
             System.out.println(d.getMessage());
             System.out.println(d.getStackTrace());
         }
         return u;
-    }
-    
+    }    
     
 }

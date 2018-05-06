@@ -24,7 +24,7 @@ public class ActividadDao {
     public static Connection getConnection(){
         String url,UserName,password;
          
-        url="jdbc:mysql://localhost/keephealthy";
+        url="jdbc:mysql://localhost/KeepHealthyDB";
         UserName="root";
         password="n0m3l0";
         

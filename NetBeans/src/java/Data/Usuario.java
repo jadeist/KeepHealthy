@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 package Data;
+import java.util.*;
 
 /**
  *
  * @author Diego
  */
 public class Usuario {
-     private String nombreUsuario,Contrasena,Nickname,FechaNacimiento,Ocupacion,FechaRegistro,FechaUltVez;
+     private String nombreUsuario,Contrasena,Nickname,Ocupacion;
+     private java.sql.Date FechaRegistro,FechaUltVez,FechaNacimiento;
     private int idUsuario,idperfil,idsexo,idActividad;
     private float pesoUsuario,Estatura,CaloriasDiarias;
 
@@ -38,13 +40,7 @@ public class Usuario {
         this.Nickname = Nickname;
     }
 
-    public String getFechaNacimiento() {
-        return FechaNacimiento;
-    }
-
-    public void setFechaNacimiento(String FechaNacimiento) {
-        this.FechaNacimiento = FechaNacimiento;
-    }
+    
 
     public String getOcupacion() {
         return Ocupacion;
@@ -54,21 +50,7 @@ public class Usuario {
         this.Ocupacion = Ocupacion;
     }
 
-    public String getFechaRegistro() {
-        return FechaRegistro;
-    }
-
-    public void setFechaRegistro(String FechaRegistro) {
-        this.FechaRegistro = FechaRegistro;
-    }
-
-    public String getFechaUltVez() {
-        return FechaUltVez;
-    }
-
-    public void setFechaUltVez(String FechaUltVez) {
-        this.FechaUltVez = FechaUltVez;
-    }
+  
 
     public int getIdUsuario() {
         return idUsuario;
@@ -125,6 +107,33 @@ public class Usuario {
     public void setCaloriasDiarias(float CaloriasDiarias) {
         this.CaloriasDiarias = CaloriasDiarias;
     }
+
+    public java.sql.Date getFechaRegistro() {
+        return FechaRegistro;
+    }
+
+    public void setFechaRegistro(java.sql.Date FechaRegistro) {
+        this.FechaRegistro = FechaRegistro;
+    }
+
+    public java.sql.Date getFechaUltVez() {
+        return FechaUltVez;
+    }
+
+    public void setFechaUltVez(java.sql.Date FechaUltVez) {
+        this.FechaUltVez = FechaUltVez;
+    }
+
+    public java.sql.Date getFechaNacimiento() {
+        return FechaNacimiento;
+    }
+
+    public void setFechaNacimiento(java.sql.Date FechaNacimiento) {
+        this.FechaNacimiento = FechaNacimiento;
+    }
+
+  
+
 
     
 }

@@ -344,7 +344,6 @@ CREATE TABLE `Usuario` (
   `idUsuario` int(6) NOT NULL AUTO_INCREMENT,
   `idPerfil` int(1) DEFAULT NULL,
   `idSexo` int(1) DEFAULT NULL,
-  `idAlimentoRestriccion` int(6) DEFAULT NULL,
   `idActividad` int(1) DEFAULT NULL,
   `nombreUsuario` varchar(65) DEFAULT NULL,
   `nickname` varchar(20) DEFAULT NULL,
@@ -360,12 +359,10 @@ CREATE TABLE `Usuario` (
   PRIMARY KEY (`idUsuario`),
   KEY `idPerfil` (`idPerfil`),
   KEY `idSexo` (`idSexo`),
-  KEY `idAlimentoRestriccion` (`idAlimentoRestriccion`),
   KEY `idActividad` (`idActividad`),
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idPerfil`) REFERENCES `Perfil` (`idPerfil`),
   CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`idSexo`) REFERENCES `Sexo` (`idSexo`),
-  CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`idAlimentoRestriccion`) REFERENCES `AlimentoRestriccion` (`idAlimentoRestriccion`),
-  CONSTRAINT `usuario_ibfk_4` FOREIGN KEY (`idActividad`) REFERENCES `Actividad` (`idActividad`)
+  CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`idActividad`) REFERENCES `Actividad` (`idActividad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

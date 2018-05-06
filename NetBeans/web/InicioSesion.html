@@ -1,0 +1,73 @@
+<html>
+	<head>
+		<title>KeepHealthy | Bienvenido </title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	    <link rel="stylesheet" href="assets/css/bootstrap.css">
+	</head>
+
+	<body class="landing">
+		<header id="navmain-header">
+			<div class="container">
+			    <nav class="navbar navbar-default">
+		        	<div class="navbar-header">
+						<a href="#" class="js-navmain-nav-toggle navmain-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+		         		<a class="navbar-brand" href="index.html">KeepHealthy</a>
+		    		</div>
+                                
+		    		<div id="navbar" class="navbar-collapse collapse">
+                                 
+		        		<ul class="nav navbar-nav navbar-right">
+		        			<li class="active"><a href="index.html"><span>Inicio</span></a></li>		            		
+		        		</ul>
+                                
+		    		</div>
+                                
+				</nav>
+		  	</div>
+		</header>						
+			<section id="InicioSesion" class="wrapper style2 special">
+				<div class="inner">
+					<header class="major narrow">
+						<h2>Inicia ahora</h2>
+						<p>Bienvenido a KeepHealthy </p>
+					</header>
+					<form action="ValidarUsuarioServlet" method="POST">
+						<div class="container 75%">
+							<div class="row uniform 50%">
+								<div class="6u 12u(xsmall)">
+									<input name="Nickname" placeholder="Nickname" type="text" />
+								</div>
+								<div class="6u 12u(xsmall)">
+									<input name="Contrasena" placeholder="Contraseña" type="password" />
+								</div>								
+							</div>
+						</div>
+						<ul class="actions">                                                    
+							<li><input type="submit" class="special" value="FIRMARME" /></li>
+                                                </ul>
+					</form>
+				</div>
+			</section>
+			<footer id="footer">
+				<div class="inner">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-github">
+							<span class="label">Github</span>
+						</a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; TYFONWARE 2018.</li>
+						<li style="text-transform: lowercase">Imagenes de <a href="http://unsplash.com">Unsplash</a>.</li>
+					</ul>
+				</div>
+			</footer>
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/bootstrap.min.js"></script>
+	</body>
+</html>
