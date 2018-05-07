@@ -57,7 +57,7 @@ public class ValidarUsuarioServlet extends HttpServlet {
                     out.println("</head>");
                     out.println("<body>");
                     out.println("<script type=\"text/javascript\">");
-                    out.println("swal({title: \"Lo sentimos :(\",text: \"\",type: \"success\"},");
+                    out.println("swal({title: \"Bienvenido!\",text: \"\",type: \"success\"},");
                     out.println("function () {window.location.href = 'inicio.html';});");
                     out.println("</script>"); 
                     out.println("</body>");
@@ -74,7 +74,7 @@ public class ValidarUsuarioServlet extends HttpServlet {
                     out.println("<body>");
                     out.println("<script type=\"text/javascript\">");
                     out.println("swal({title: \"Hubo un error\",text: \"Usuario o contraseña incorrecta.\",type: \"error\"},");
-                    out.println("function () {window.location.href = 'index.html';});");
+                    out.println("function () {window.location.href = 'InicioSesion.html';});");
                     out.println("</script>"); 
                     out.println("</body>");
                     out.println("</html>");
@@ -92,15 +92,15 @@ public class ValidarUsuarioServlet extends HttpServlet {
                 out.println("swal({title: \"Ocurrio un error\",");
                     
                 if (resultadonombre!="OK")
-                    out.println("text: \"Error en el Nickname del usuario: "+resultadonombre+" \",type: \"error\"},");
-                    out.println("function () {window.location.href = 'index.html?#four';});");
+                    out.println("text: \"Error en el Nickname del usuario: "+resultadonombre+"\",type:\"error\"},");
+                    out.println("function () {window.location.href = 'InicioSesion.html';});");
                     out.println("</script>"); 
                     out.println("</body>");
                     out.println("</html>");
                     
                 if (resultadopassword!="OK")
-                    out.println("text: \"Error en el campo de contraseña: "+resultadopassword+" \",type: \"error\"},");
-                    out.println("function () {window.location.href = 'index.html?#four';});");
+                    out.println("text:\"Error en el campo de contraseña: "+resultadopassword+"\",type:\"error\"},");
+                    out.println("function () {window.location.href = 'InicioSesion.html';});");
                     out.println("</script>"); 
                     out.println("</body>");
                     out.println("</html>");                                                                      

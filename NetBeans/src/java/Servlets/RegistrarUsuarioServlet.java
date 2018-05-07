@@ -189,35 +189,39 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                         out.println("</head>");
                         out.println("<body>");
                         out.println("<script type=\"text/javascript\">");
-                        out.println("swal({title: \"Ocurrio un error\",");
+                        out.println("swal({title:\"Ocurrio un error\",");
                         
-                        if (resultadonombreUsuario!="OK")
-                            out.println("text: \"Error en el nombre de usuario: "+resultadonombreUsuario+" \",type: \"error\"},");
+                        if (resultadonombreUsuario!="OK"){
+                            out.println("text: \"Error en el nombre de usuario: "+resultadonombreUsuario+"\",type:\"error\"},");
                             out.println("function () {window.location.href = 'index.html?#four';});");
                             out.println("</script>"); 
                             out.println("</body>");
                             out.println("</html>");
+                        }
                     
-                        if (resultadoOcupacion!="OK")
-                            out.println("text: \"Error en la ocupacion del usuario: "+resultadoOcupacion+" \",type: \"error\"},");
+                        if (resultadoOcupacion!="OK"){
+                            out.println("text:\"Error en la ocupacion del usuario:"+resultadoOcupacion+"\",type:\"error\"},");
                             out.println("function () {window.location.href = 'index.html?#four';});");
                             out.println("</script>"); 
                             out.println("</body>");
                             out.println("</html>");
+                        }
                                       
-                        if (resultadoEstatura!="OK")
-                            out.println("text: \"Error en la estatura del usuario: "+resultadoEstatura+" \",type: \"error\"},");
+                        if (resultadoEstatura!="OK"){
+                            out.println("text:\"Error en la estatura del usuario: "+resultadoEstatura+"\",type:\"error\"},");
                             out.println("function () {window.location.href = 'index.html?#four';});");
                             out.println("</script>"); 
                             out.println("</body>");
                             out.println("</html>");
+                        }
                    
-                        if (resultadoPeso!="OK")
-                            out.println("text: \"Error en el peso del usuario: "+resultadoPeso+" \",type: \"error\"},");
+                        if (resultadoPeso!="OK"){
+                            out.println("text:\"Error en el peso del usuario: "+resultadoPeso+"\",type:\"error\"},");
                             out.println("function () {window.location.href = 'index.html?#four';});");
                             out.println("</script>"); 
                             out.println("</body>");
-                            out.println("</html>");                                 
+                            out.println("</html>"); 
+                        }
                     }
                 }
             }
