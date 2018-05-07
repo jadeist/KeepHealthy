@@ -91,19 +91,21 @@ public class ValidarUsuarioServlet extends HttpServlet {
                 out.println("<script type=\"text/javascript\">");
                 out.println("swal({title: \"Ocurrio un error\",");
                     
-                if (resultadonombre!="OK")
-                    out.println("text: \"Error en el Nickname del usuario: "+resultadonombre+"\",type:\"error\"},");
-                    out.println("function () {window.location.href = 'InicioSesion.html';});");
+                if (resultadonombre!="OK"){
+                    out.println("text: \"Error en el Nickname del usuario: "+resultadonombre+" \",type: \"error\"},");
+                    out.println("function () {window.location.href = 'index.html?#four';});");
                     out.println("</script>"); 
                     out.println("</body>");
                     out.println("</html>");
+                }
                     
-                if (resultadopassword!="OK")
-                    out.println("text:\"Error en el campo de contraseña: "+resultadopassword+"\",type:\"error\"},");
-                    out.println("function () {window.location.href = 'InicioSesion.html';});");
+                if (resultadopassword!="OK"){
+                    out.println("text: \"Error en el campo de contraseña: "+resultadopassword+" \",type: \"error\"},");
+                    out.println("function () {window.location.href = 'index.html?#four';});");
                     out.println("</script>"); 
                     out.println("</body>");
-                    out.println("</html>");                                                                      
+                    out.println("</html>");
+                }
             }             
         } 
         catch (SQLException ex) {
