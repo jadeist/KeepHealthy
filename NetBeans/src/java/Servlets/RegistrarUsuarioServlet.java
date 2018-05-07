@@ -61,29 +61,16 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                 u=UsuarioDao.getUsuarioByNickname(Nickname);
 
                 if((u.getNickname())!=null){
-                    
-                    out.println("<!DOCTYPE html>");
                     out.println("<html>");
-                    out.println("<head"
-                            + " <meta charset='UTF-8'>");
-                    out.println("<title>KeepHealthy</title>"
-                             + "<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimm-scale=1.0'>"
-                             + "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\"/>");            
+                    out.println("<head>");
+                    out.println("<script src=\"assets/js/sweetalert.min.js\"></script>");
+                    out.println("<link href=\"assets/css/sweetalert.css\" rel=\"stylesheet\" type=\"text/css\"/>");
                     out.println("</head>");
                     out.println("<body>");
-                    out.println("<table bgcolor='CC6666' align='center'>"
-                            + "<tr>"
-                            + "<td>"
-                            + "<h1>Errores encontrados</h1>");     
-                    out.println("Error : " + "Usuario Existente"+"<br>");
-                    out.println("<form action='index.html#four'>"
-                            + "<input type='submit' value='Inicio'>"
-                            + "</form>"
-                            + "</td>"
-                            + "</tr>"
-                            + "</table>"
-                            +"<script src='js/jquery.js'></script>"
-                            +"<script src='js/bootstrap.min.js'></script>");
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("swal({title: \"Lo sentimos :(\",text: \"El usuario que estás intentando registrar ya ha sido registrado.\",type: \"error\"},");
+                    out.println("function () {window.location.href = 'index.html?#four';});");
+                    out.println("</script>"); 
                     out.println("</body>");
                     out.println("</html>");                    
                 }
@@ -164,106 +151,101 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                             parte del back ened, de modo que el usuario nunca ve el proceso de 
                             dicha accion
                             */
-                            out.println("<!DOCTYPE html>");
                             out.println("<html>");
-                            out.println("<head"
-                                    + " <meta charset='UTF-8'>");
-                            out.println("<title>KeepHealthy</title>"
-                                     + "<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimm-scale=1.0'>"
-                                     + "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\"/>");            
+                            out.println("<head>");
+                            out.println("<script src=\"assets/js/sweetalert.min.js\"></script>");
+                            out.println("<link href=\"assets/css/sweetalert.css\" rel=\"stylesheet\" type=\"text/css\"/>");
                             out.println("</head>");
                             out.println("<body>");
-                            out.println("<table bgcolor='CC6666' align='center'>"
-                                    + "<tr>"
-                                    + "<td>"
-                                    + "<h1>Usuario reigistrado con exito</h1>");                                                   
-                            out.println("<form action='inicio.html'>"
-                                    + "<input type='submit' value='Inicio'>"
-                                    + "</form>"
-                                    + "</td>"
-                                    + "</tr>"
-                                    + "</table>"
-                                    +"<script src='js/jquery.js'></script>"
-                                    +"<script src='js/bootstrap.min.js'></script>");
+                            out.println("<script type=\"text/javascript\">");
+                            out.println("swal({title: \"Excelente!\",text: \"Has completado tu registro exitosamente.\",type: \"success\"},");
+                            out.println("function () {window.location.href = 'inicio.html';});");
+                            out.println("</script>"); 
                             out.println("</body>");
-                            out.println("</html>");
+                            out.println("</html>"); 
                         }
-                        else{                               
-                            out.println("error actualiza");
+                        else{
+                            out.println("<html>");
+                            out.println("<head>");
+                            out.println("<script src=\"assets/js/sweetalert.min.js\"></script>");
+                            out.println("<link href=\"assets/css/sweetalert.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+                            out.println("</head>");
+                            out.println("<body>");
+                            out.println("<script type=\"text/javascript\">");
+                            out.println("swal({title: \"Lo sentimos :(\",text: \"Has excedido el tiempo limite de registro, intentalo de nuevo.\",type: \"warning\"},");
+                            out.println("function () {window.location.href = 'index.html?#four';});");
+                            out.println("</script>"); 
+                            out.println("</body>");
+                            out.println("</html>");    
                         }
                         out.close();                                                
                     }
                     else{  //SEGUNDOS ERRORES
                         
-                        out.println("<!DOCTYPE html>");
                         out.println("<html>");
-                        out.println("<head"
-                                + " <meta charset='UTF-8'>");
-                        out.println("<title>KeepHealthy</title>"
-                                 + "<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimm-scale=1.0'>"
-                                 + "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\"/>");            
+                        out.println("<head>");
+                        out.println("<script src=\"assets/js/sweetalert.min.js\"></script>");
+                        out.println("<link href=\"assets/css/sweetalert.css\" rel=\"stylesheet\" type=\"text/css\"/>");
                         out.println("</head>");
                         out.println("<body>");
-                        out.println("<table bgcolor='CC6666' align='center'>"
-                                + "<tr>"
-                                + "<td>"
-                                + "<h1>Errores encontrados</h1>");     
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("swal({title: \"Ocurrio un error\",");
+                        
                         if (resultadonombreUsuario!="OK")
-                            out.println("Error en Nombre Usuario: " + resultadonombreUsuario+"<br>");
+                            out.println("text: \"Error en el nombre de usuario: "+resultadonombreUsuario+" \",type: \"error\"},");
+                            out.println("function () {window.location.href = 'index.html?#four';});");
+                            out.println("</script>"); 
+                            out.println("</body>");
+                            out.println("</html>");
                     
                         if (resultadoOcupacion!="OK")
-                            out.println("Error en Ocupacion Usuario: " + resultadoOcupacion+"<br>");
+                            out.println("text: \"Error en la ocupacion del usuario: "+resultadoOcupacion+" \",type: \"error\"},");
+                            out.println("function () {window.location.href = 'index.html?#four';});");
+                            out.println("</script>"); 
+                            out.println("</body>");
+                            out.println("</html>");
                                       
                         if (resultadoEstatura!="OK")
-                            out.println("Error en Estatura: " + resultadoEstatura+"<br>");
+                            out.println("text: \"Error en la estatura del usuario: "+resultadoEstatura+" \",type: \"error\"},");
+                            out.println("function () {window.location.href = 'index.html?#four';});");
+                            out.println("</script>"); 
+                            out.println("</body>");
+                            out.println("</html>");
                    
                         if (resultadoPeso!="OK")
-                            out.println("Error en Peso: " + resultadoPeso+"<br>");
-                        
-                        out.println("<form action='index.html#four'>"
-                                + "<input type='submit' value='Inicio'>"
-                                + "</form>"
-                                + "</td>"
-                                + "</tr>"
-                                + "</table>"
-                                +"<script src='js/jquery.js'></script>"
-                                +"<script src='js/bootstrap.min.js'></script>");
-                        out.println("</body>");
-                        out.println("</html>");                                 
+                            out.println("text: \"Error en el peso del usuario: "+resultadoPeso+" \",type: \"error\"},");
+                            out.println("function () {window.location.href = 'index.html?#four';});");
+                            out.println("</script>"); 
+                            out.println("</body>");
+                            out.println("</html>");                                 
                     }
                 }
             }
             else{
-                out.println("<!DOCTYPE html>");
                 out.println("<html>");
-                out.println("<head"
-                        + " <meta charset='UTF-8'>");
-                out.println("<title>KeepHealthy</title>"
-                         + "<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimm-scale=1.0'>"
-                         + "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\"/>");            
+                out.println("<head>");
+                out.println("<script src=\"assets/js/sweetalert.min.js\"></script>");
+                out.println("<link href=\"assets/css/sweetalert.css\" rel=\"stylesheet\" type=\"text/css\"/>");
                 out.println("</head>");
                 out.println("<body>");
-                out.println("<table bgcolor='CC6666' align='center'>"
-                        + "<tr>"
-                        + "<td>"
-                        + "<h1>Errores encontrados</h1>");     
+                out.println("<script type=\"text/javascript\">");
+                out.println("swal({title: \"Ocurrio un error\",");
+                
                 if (resultadonombre!="OK"){
-                    out.println("Error en campo Nickname: " + resultadonombre+"<br>");
+                    out.println("text: \"Error en el Nickname del usuario: "+resultadonombre+" \",type: \"error\"},");
+                    out.println("function () {window.location.href = 'index.html?#four';});");
+                    out.println("</script>"); 
+                    out.println("</body>");
+                    out.println("</html>");
                 }                  
                 if (resultadopassword!="OK"){
-                    out.println("Error en campo Password: " + resultadopassword+"<br>");
+                    out.println("text: \"Error en el campo de contraseña: "+resultadopassword+" \",type: \"error\"},");
+                    out.println("function () {window.location.href = 'index.html?#four';});");
+                    out.println("</script>"); 
+                    out.println("</body>");
+                    out.println("</html>");
                 }       
-
-                out.println("<form action='index.html#four'>"
-                                + "<input type='submit' value='Inicio'>"
-                                + "</form>"
-                                + "</td>"
-                                + "</tr>"
-                                + "</table>"
-                                +"<script src='js/jquery.js'></script>"
-                                +"<script src='js/bootstrap.min.js'></script>");
-                out.println("</body>");
-                out.println("</html>");                                                                       
+                                                                      
             }             
         } catch (SQLException ex) {
             Logger.getLogger(RegistrarUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
