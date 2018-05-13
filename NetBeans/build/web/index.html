@@ -1,7 +1,9 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>KeepHealthy | Bienvenido </title>
-		<meta charset="utf-8" />
+                <html lang="es">
+                <meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
                 <link rel="stylesheet" href="assets/css/bootstrap.css">
@@ -20,7 +22,7 @@
 		    		<div id="navbar" class="navbar-collapse collapse">
 		        		<ul class="nav navbar-nav navbar-right">
 		        			<li class="active"><a href="#"><span>Inicio</span></a></li>
-		            		<li><a href="#"><span> Conocenos </span></a></li>
+		            		<li><a href="conocenos.html"><span> Conocenos </span></a></li>
 		            		<li><a href="#four"><span>Registrate</span></a></li>
                     		<li><a href="InicioSesion.html"><span> Inicia Sesion </span></a></li>
 		        		</ul>
@@ -74,7 +76,8 @@
 						<h2>Registrate ahora</h2>
 						<p>La subscripción a KeepHealthy es gratuita y lo será siempre</p>
 					</header>
-					<form action="RegistrarUsuarioServlet" method="POST">
+                                            <form action="RegistrarUsuarioServlet" method="POST">
+                                             <meta charset="UTF-8">
 						<div class="container 75%">
 							<div class="row uniform 50%">
 								<div class="6u 12u(xsmall)">
@@ -84,10 +87,10 @@
 									<input name="nombreUsuario" placeholder="Nombre Completo" type="text" />
 								</div>
                                                                 <div class="6u 12u(xsmall)">
-									<input name="PesoUsuario" placeholder="Peso Actual" type="text" />
+									<input name="PesoUsuario" placeholder="Peso Actual (kg)" type="text" />
 								</div>
                                                                  <div class="6u 12u(xsmall)">
-									<input name="Estatura" placeholder="Estatura Actual" type="text" />
+									<input name="Estatura" placeholder="Estatura Actual (cm)" type="text" />
 								</div>
                                                                 <div class="6u 12u(xsmall)">
 									<input name="Ocupacion" placeholder="Ocupación" type="text" />

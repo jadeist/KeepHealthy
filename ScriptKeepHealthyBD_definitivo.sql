@@ -1,4 +1,4 @@
-#drop database KeepHealthyDB;
+drop database KeepHealthyDB;
 create database KeepHealthyDB;
 use KeepHealthyDB;
 
@@ -57,25 +57,28 @@ create table EtapaMenu(
                     
 create table MenuUsuario(
 					idMenuUsuario int(6) not null auto_increment primary key,
-                    idMenu int(6),
-                    idUsuario int(6));
+                    idMenu int(6),					
+                    idUsuario int(6),
+					fechaCreacion datetime);
                     
 create table HistorialMenu(
 					idHistorialMenu int(6) not null auto_increment primary key,
-                    idMenuUsuario int(6),
+                    idMenu int(6),
+					idUsuario int(6),
                     fechaCreacion datetime,
-                    Calificacion float(4));
+                    Calificacion float(4),
+					ComentarioHistorial varchar(150));
                     
 create table Menu(
 					idMenu int(6) not null auto_increment primary key,
-                    idGrupoEtapa int(6),
                     noMenu int(6),
                     caloriasMenu float(10));
                     
 create table GrupoEtapa(
 					idGrupoEtapa int(6) not null auto_increment primary key,
                     idEtapaMenu int(1),
-                    idAlimento int(6));
+                    idAlimento int(6),
+					noMenu int(6));
                     
 create table HistorialPeso(
 					idHistorialPeso int(6) not null auto_increment primary key,
@@ -91,10 +94,10 @@ alter table Usuario add foreign key (idActividad) references Actividad(idActivid
 alter table Alimento add foreign key (idCategoria) references CatAlimento(idCategoria);
 alter table AlimentoRestriccion add foreign key (idAlimento) references Alimento(idAlimento);
 alter table AlimentoRestriccion add foreign key (idUsuario) references Usuario(idUsuario);
-alter table MenuUsuario add foreign key (idMenu) references Menu(idMenu);
 alter table MenuUsuario add foreign key (idUsuario) references Usuario(idUsuario);
-alter table HistorialMenu add foreign key (idMenuUsuario) references MenuUsuario(idMenuUsuario);
-alter table Menu add foreign key (idGrupoEtapa) references GrupoEtapa(idGrupoEtapa);
+alter table MenuUsuario add foreign key (idMenu) references Menu(idMenu);
+alter table HistorialMenu add foreign key (idMenu) references Menu(idMenu);
+alter table HistorialMenu add foreign key (idUsuario) references Usuario(idUsuario);
 alter table GrupoEtapa add foreign key (idEtapaMenu) references EtapaMenu(idEtapaMenu);
 alter table HistorialPeso add foreign key (idUsuario) references Usuario(idUsuario);
 alter table HistorialPeso add foreign key (idHistorialMenu) references HistorialMenu(idHistorialMenu);
@@ -119,6 +122,7 @@ insert into EtapaMenu(descripcionEtapa,horaEtapa,porcentajeCalorias) values ('Al
 insert into EtapaMenu(descripcionEtapa,horaEtapa,porcentajeCalorias) values ('Comida','14:30',20.0);
 insert into EtapaMenu(descripcionEtapa,horaEtapa,porcentajeCalorias) values ('Merienda','18:00',20.0);
 insert into EtapaMenu(descripcionEtapa,horaEtapa,porcentajeCalorias) values ('Cena','21:00',20.0);
+
 insert into Alimento(nombreAlimento,idCategoria,Porcion,Calorias) values ('Tortilla',6,'2 pza',3);
 insert into Alimento(nombreAlimento,idCategoria,Porcion,Calorias) values ('Arroz',6,'250gr',3);
 insert into Alimento(nombreAlimento,idCategoria,Porcion,Calorias) values ('Avena',6,'250gr',3);
@@ -139,3 +143,26 @@ insert into Alimento(nombreAlimento,idCategoria,Porcion,Calorias) values ('Leche
 insert into Alimento(nombreAlimento,idCategoria,Porcion,Calorias) values ('Yogur',3,'1 vaso',8);
 insert into Alimento(nombreAlimento,idCategoria,Porcion,Calorias) values ('Agua',2,'medio litro',9);
 insert into Alimento(nombreAlimento,idCategoria,Porcion,Calorias) values ('Huevo',7,'2 claras',10);
+
+
+insert into Usuario(Nickname,Contrasena,idPerfil,nombreUsuario,idSexo,FechaNacimiento,PesoUsuario,Estatura,Ocupacion,idActividad,FechaRegistro,FechaUltVez,caloriasDiarias) values ('admin','admin',1,'Administrador',1,"2018-05-12 00:00:00",100,100,'Administrador',1,"2018-05-12 00:00:00","2018-05-12 00:00:00",100);
+insert into Usuario(Nickname,Contrasena,idPerfil,nombreUsuario,idSexo,FechaNacimiento,PesoUsuario,Estatura,Ocupacion,idActividad,FechaRegistro,FechaUltVez,caloriasDiarias) values ('usuario','usuario',2,'Usuario',1,"2018-05-12 00:00:00",100,100,'Estudiante',1,"2018-05-12 00:00:00","2018-05-12 00:00:00",100);
+insert menu (noMenu,caloriasMenu) values (1,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (1,1,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (1,2,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (1,3,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (2,4,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (2,5,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (2,6,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (3,7,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (3,8,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (3,9,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (4,10,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (4,11,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (4,12,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (5,13,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (5,14,1);
+insert into grupoetapa (idetapamenu,idalimento,nomenu) values (5,15,1);
+
+insert into menuusuario (idmenu,idusuario,fechacreacion) values (1,2,"2018-05-12 00:00:00");
+

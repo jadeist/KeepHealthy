@@ -1,25 +1,27 @@
 package Data;
 
-import java.util.*;
-import java.sql.*;
-import javax.servlet.ServletException;
+
+import Data.*;
+import static java.lang.System.out;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /*
-Esta es la clase que se envcargara
-de la conexion con la BD y es
-la que se encarga de realizar las acciones por 
-parte del usuario
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-Guardar un empleado
-Consultar los datos de un empleado
-Actualizar los datos del empleado
-Dar de baja a los empleados
-Buscar un solo empleado
-*/
-
-
-
-public class MenuDao {
-   
+/**
+ *
+ * @author Diego
+ */
+public class GrupoEtapaDao {
     public static Connection getConnection(){
         String url,UserName,password;
          
@@ -34,7 +36,7 @@ public class MenuDao {
             Class.forName("com.mysql.jdbc.Driver");
             con= DriverManager.getConnection(url,UserName,password);
             
-            System.out.println("Si se conecto ");
+            System.out.println("Si se conecto");
             
         }catch(Exception e){
             System.out.println("Error");
@@ -48,7 +50,7 @@ public class MenuDao {
     
     /*Primer metodo Guardar Empleado*/
     
-    public static int Guardar(Menu m) throws SQLException{
+    public static int Guardar(GrupoEtapa ge) throws SQLException{
         
         int estatus=0;
         
@@ -56,18 +58,20 @@ public class MenuDao {
         de la tabla de la bd para saber si el empleado
         que voy a registrar es nuevo o no */
         try{
-        Connection con=MenuDao.getConnection();
+        Connection con=GrupoEtapaDao.getConnection();
         String q;
-        q="insert into Menu (noMenu,caloriasMenu) values (?,?) ";
+        q="insert into GrupoEtapa(idEtapaMenu,idAlimento,noMenu) values (?,?,?)";
         
         PreparedStatement ps =con.prepareStatement(q);
         
-        ps.setInt(1,m.getNoMenu());        
-        ps.setFloat(2,m.getCaloriasMenu());
-              
+        ps.setInt(1,ge.getIdEtapaMenu());
+        ps.setInt(2,ge.getIdAlimento());
+        ps.setInt(3,ge.getNoMenu());
+        
         estatus=ps.executeUpdate();
         con.close();
-              
+        
+        
         }catch(Exception d){
             System.out.println("Error");
             System.out.println(d.getMessage());
@@ -76,7 +80,7 @@ public class MenuDao {
         return estatus;
     }
     
-    public static int Actualizar(Menu m) throws SQLException{
+    public static int Actualizar(GrupoEtapa ge) throws SQLException{
         
         int estatus=0;
         
@@ -84,20 +88,20 @@ public class MenuDao {
         de la tabla de la bd para saber si el empleado
         que voy a registrar es nuevo o no */
         try{
-        Connection con=MenuDao.getConnection();
+        Connection con=GrupoEtapaDao.getConnection();
         String q;
-        q="update Menu set " 
-                +"noMenu=?," 
-                +"caloriasMenu=?," 
-                +"where idMenu=?";
         
+      q="update GrupoEtapa set idEtapamenu=?,"
+              + "idAlimento=?,"
+              + "noMenu=?,"
+              + "where idGrupoEtapa=?";
         PreparedStatement ps =con.prepareStatement(q);
-        
-        
-        ps.setInt(1,m.getNoMenu());
-        ps.setFloat(2,m.getCaloriasMenu());
-        ps.setInt(3,m.getIdMenu());
-        
+
+        ps.setInt(1,ge.getIdEtapaMenu());
+        ps.setInt(2,ge.getIdAlimento());
+        ps.setInt(3,ge.getNoMenu());
+        ps.setInt(4,ge.getIdGrupoEtapa());
+                
         estatus=ps.executeUpdate();
         con.close();
         
@@ -118,9 +122,9 @@ public class MenuDao {
         de la tabla de la bd para saber si el empleado
         que voy a registrar es nuevo o no */
         try{
-        Connection con=MenuDao.getConnection();
+        Connection con=GrupoEtapaDao.getConnection();
         String q;
-        q="delete from Menu where idMenu=? ";
+        q="delete from GrupoEtapa where idGrupoEtapa=? ";
         
         PreparedStatement ps =con.prepareStatement(q);
         
@@ -138,70 +142,64 @@ public class MenuDao {
         return estatus;
     }
      
-     public static  Menu getMenuById (int id) throws SQLException{
+     public static  GrupoEtapa getGrupoEtapaById (int idGrupoEtapa) throws SQLException{
         
-        Menu m=new Menu();
+        GrupoEtapa ge=new GrupoEtapa();
         
         
         /*Es necesrio contar con un estado
         de la tabla de la bd para saber si el empleado
         que voy a registrar es nuevo o no */
         try{
-        Connection con=MenuDao.getConnection();
+        Connection con=GrupoEtapaDao.getConnection();
         String q;
-        q="Select * from Menu where idMenu=?";
+        q="Select * from GrupoEtapa where idGrupoEtapa=?";
         
         PreparedStatement ps =con.prepareStatement(q);
         
-        ps.setInt(1, id);
+        ps.setInt(1, idGrupoEtapa);
         
         ResultSet rs=ps.executeQuery();
         
-        if(rs.next()){
-            m.setIdMenu(rs.getInt(1));            
-            m.setNoMenu(rs.getInt(2));
-            m.setCaloriasMenu(rs.getFloat(3));
-        }
-        
-        
+        if(rs.next()){            
+            ge.setIdGrupoEtapa(rs.getInt(1));
+            ge.setIdEtapaMenu(rs.getInt(2));
+            ge.setIdAlimento(rs.getInt(3));            
+            ge.setNoMenu(rs.getInt(4));            
+        }                
         con.close();
-        
-        
+
         }catch(Exception d){
             System.out.println("Error");
             System.out.println(d.getMessage());
             System.out.println(d.getStackTrace());
         }
-        return m;
+        return ge;
     }
      
-   
-    public static List<Menu> getAllMenus(int id ) throws SQLException{
+ public static List<GrupoEtapa> getAllGrupoEtapabyNoMenu(int noMenu, int idEtapaMenu ) throws SQLException{
         
-        List<Menu> lista =new ArrayList<Menu>();
+        List<GrupoEtapa> lista =new ArrayList<GrupoEtapa>();
         
-        
-        
-        /*Es necesrio contar con un estado
-        de la tabla de la bd para saber si el empleado
-        que voy a registrar es nuevo o no */
         try{
-        Connection con=MenuDao.getConnection();
-        String q;
-        q="Select * from Menu where idMenu=?";
+            Connection con=GrupoEtapaDao.getConnection();
+            String q;
+            q="Select * from GrupoEtapa where noMenu=? and idEtapaMenu =?";
         
-        PreparedStatement ps =con.prepareStatement(q);
-        ps.setInt(1, id);
+            PreparedStatement ps =con.prepareStatement(q);
+            ps.setInt(1, noMenu);
+            ps.setInt(2, idEtapaMenu);
         
-        ResultSet rs=ps.executeQuery();
+            ResultSet rs=ps.executeQuery();
         
-        while(rs.next()){
-                Menu m=new Menu();
-                m.setIdMenu(rs.getInt(1));                
-                m.setNoMenu(rs.getInt(2));
-                m.setCaloriasMenu(rs.getFloat(3));
-                lista.add(m);            
-        }
+            while(rs.next()){
+                GrupoEtapa ge=new GrupoEtapa();
+                ge.setIdGrupoEtapa(rs.getInt(1));
+                ge.setIdEtapaMenu(rs.getInt(2));
+                ge.setIdAlimento(rs.getInt(3));
+                ge.setNoMenu(rs.getInt(4));
+                lista.add(ge);            
+            }
         
         con.close();
         
@@ -214,7 +212,6 @@ public class MenuDao {
         
         return lista;
     }
-    
-    
-    
+ 
+ 
 }

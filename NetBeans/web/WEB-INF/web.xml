@@ -8,6 +8,10 @@
         <servlet-name>ValidarUsuarioServlet</servlet-name>
         <servlet-class>Servlets.ValidarUsuarioServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CierraRegimenServlet</servlet-name>
+        <servlet-class>Servlets.CierraRegimenServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistrarUsuarioServlet</servlet-name>
         <url-pattern>/RegistrarUsuarioServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>ValidarUsuarioServlet</servlet-name>
         <url-pattern>/ValidarUsuarioServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CierraRegimenServlet</servlet-name>
+        <url-pattern>/CierraRegimenServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

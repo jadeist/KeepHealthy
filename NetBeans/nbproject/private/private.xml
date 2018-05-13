@@ -3,8 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/jade/Desktop/KeepHealthy/NetBeans/src/java/Servlets/RegistrarUsuarioServlet.java</file>
-            <file>file:/Users/jade/Desktop/KeepHealthy/NetBeans/src/java/Servlets/ValidarUsuarioServlet.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/GrupoEtapa.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/AlimentoDao.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/web/perfil.jsp</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/web/mimenu.jsp</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/MenuDao.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/MenuUsuario.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/web/inicio.jsp</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Servlets/RegistrarUsuarioServlet.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/web/InicioSesion.html</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/EtapaMenuDao.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/Menu.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Servlets/ValidarUsuarioServlet.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/Alimento.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/UsuarioDao.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/web/conocenos.html</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/web/index.html</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/GrupoEtapaDao.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/EtapaMenu.java</file>
+            <file>file:/C:/Users/Diego/OneDrive/Escritorio/Expo/KeepHealthy-master/NetBeans/src/java/Data/MenuUsuarioDao.java</file>
         </group>
     </open-files>
 </project-private>

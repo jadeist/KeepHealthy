@@ -1,25 +1,27 @@
 package Data;
 
-import java.util.*;
-import java.sql.*;
-import javax.servlet.ServletException;
+
+import Data.*;
+import static java.lang.System.out;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /*
-Esta es la clase que se envcargara
-de la conexion con la BD y es
-la que se encarga de realizar las acciones por 
-parte del usuario
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-Guardar un empleado
-Consultar los datos de un empleado
-Actualizar los datos del empleado
-Dar de baja a los empleados
-Buscar un solo empleado
-*/
-
-
-
-public class MenuDao {
-   
+/**
+ *
+ * @author Diego
+ */
+public class MenuUsuarioDao {
     public static Connection getConnection(){
         String url,UserName,password;
          
@@ -34,7 +36,7 @@ public class MenuDao {
             Class.forName("com.mysql.jdbc.Driver");
             con= DriverManager.getConnection(url,UserName,password);
             
-            System.out.println("Si se conecto ");
+            System.out.println("Si se conecto");
             
         }catch(Exception e){
             System.out.println("Error");
@@ -48,7 +50,7 @@ public class MenuDao {
     
     /*Primer metodo Guardar Empleado*/
     
-    public static int Guardar(Menu m) throws SQLException{
+    public static int Guardar(MenuUsuario m) throws SQLException{
         
         int estatus=0;
         
@@ -56,47 +58,15 @@ public class MenuDao {
         de la tabla de la bd para saber si el empleado
         que voy a registrar es nuevo o no */
         try{
-        Connection con=MenuDao.getConnection();
+        Connection con=MenuUsuarioDao.getConnection();
         String q;
-        q="insert into Menu (noMenu,caloriasMenu) values (?,?) ";
+        q="insert into MenuUsuario(idMenu,idUsuario,fechaCreacion) values (?,?,?)";
         
         PreparedStatement ps =con.prepareStatement(q);
         
-        ps.setInt(1,m.getNoMenu());        
-        ps.setFloat(2,m.getCaloriasMenu());
-              
-        estatus=ps.executeUpdate();
-        con.close();
-              
-        }catch(Exception d){
-            System.out.println("Error");
-            System.out.println(d.getMessage());
-            System.out.println(d.getStackTrace());
-        }
-        return estatus;
-    }
-    
-    public static int Actualizar(Menu m) throws SQLException{
-        
-        int estatus=0;
-        
-        /*Es necesrio contar con un estado
-        de la tabla de la bd para saber si el empleado
-        que voy a registrar es nuevo o no */
-        try{
-        Connection con=MenuDao.getConnection();
-        String q;
-        q="update Menu set " 
-                +"noMenu=?," 
-                +"caloriasMenu=?," 
-                +"where idMenu=?";
-        
-        PreparedStatement ps =con.prepareStatement(q);
-        
-        
-        ps.setInt(1,m.getNoMenu());
-        ps.setFloat(2,m.getCaloriasMenu());
-        ps.setInt(3,m.getIdMenu());
+        ps.setInt(1,m.getIdMenu());
+        ps.setInt(2,m.getIdUsuario());
+        ps.setDate(3,m.getFechaCreacion());
         
         estatus=ps.executeUpdate();
         con.close();
@@ -110,7 +80,7 @@ public class MenuDao {
         return estatus;
     }
     
-     public static int Eliminar(int id) throws SQLException{
+    public static int Actualizar(MenuUsuario m) throws SQLException{
         
         int estatus=0;
         
@@ -118,13 +88,46 @@ public class MenuDao {
         de la tabla de la bd para saber si el empleado
         que voy a registrar es nuevo o no */
         try{
-        Connection con=MenuDao.getConnection();
+        Connection con=MenuUsuarioDao.getConnection();
         String q;
-        q="delete from Menu where idMenu=? ";
+      q="update MenuUsuario set idMenu=?,"
+              + "idUsuario=?,"
+              + "fechaCreacion=?,"
+              + "where idMenuUsuario=?";
+        PreparedStatement ps =con.prepareStatement(q);
+
+        ps.setInt(1,m.getIdMenu());
+        ps.setInt(2,m.getIdUsuario());
+        ps.setDate(3,m.getFechaCreacion());
+        ps.setInt(4,m.getIdMenuusuario());
+        
+        estatus=ps.executeUpdate();
+        con.close();
+        
+        
+        }catch(Exception d){
+            System.out.println("Error");
+            System.out.println(d.getMessage());
+            System.out.println(d.getStackTrace());
+        }
+        return estatus;
+    }
+    
+     public static int Eliminar(int idUsuario) throws SQLException{
+        
+        int estatus=0;
+        
+        /*Es necesrio contar con un estado
+        de la tabla de la bd para saber si el empleado
+        que voy a registrar es nuevo o no */
+        try{
+        Connection con=MenuUsuarioDao.getConnection();
+        String q;
+        q="delete from MenuUsuario where idUsuario=? ";
         
         PreparedStatement ps =con.prepareStatement(q);
         
-        ps.setInt(1,id);
+        ps.setInt(1,idUsuario);
         
         estatus=ps.executeUpdate();
         con.close();
@@ -138,35 +141,39 @@ public class MenuDao {
         return estatus;
     }
      
-     public static  Menu getMenuById (int id) throws SQLException{
+     public static  MenuUsuario getMenuUsuarioByIdUsuario (int idUsuario) throws SQLException{
         
-        Menu m=new Menu();
+        MenuUsuario m=new MenuUsuario();
         
         
         /*Es necesrio contar con un estado
         de la tabla de la bd para saber si el empleado
         que voy a registrar es nuevo o no */
         try{
-        Connection con=MenuDao.getConnection();
+        Connection con=MenuUsuarioDao.getConnection();
         String q;
-        q="Select * from Menu where idMenu=?";
+        q="Select * from MenuUsuario where idUsuario=?";
         
         PreparedStatement ps =con.prepareStatement(q);
         
-        ps.setInt(1, id);
+        ps.setInt(1, idUsuario);
         
         ResultSet rs=ps.executeQuery();
         
-        if(rs.next()){
-            m.setIdMenu(rs.getInt(1));            
-            m.setNoMenu(rs.getInt(2));
-            m.setCaloriasMenu(rs.getFloat(3));
+        if(rs.next()){            
+            m.setIdMenuusuario(rs.getInt(1));
+            m.setIdMenu(rs.getInt(2));
+            m.setIdUsuario(rs.getInt(3));
+            m.setFechaCreacion(rs.getDate(4));            
+        } 
+        else{
+            m.setIdMenuusuario(0);
+            m.setIdMenu(0);
+            m.setIdUsuario(0);            
         }
-        
-        
+            
         con.close();
-        
-        
+
         }catch(Exception d){
             System.out.println("Error");
             System.out.println(d.getMessage());
@@ -175,46 +182,7 @@ public class MenuDao {
         return m;
     }
      
-   
-    public static List<Menu> getAllMenus(int id ) throws SQLException{
+       
         
-        List<Menu> lista =new ArrayList<Menu>();
-        
-        
-        
-        /*Es necesrio contar con un estado
-        de la tabla de la bd para saber si el empleado
-        que voy a registrar es nuevo o no */
-        try{
-        Connection con=MenuDao.getConnection();
-        String q;
-        q="Select * from Menu where idMenu=?";
-        
-        PreparedStatement ps =con.prepareStatement(q);
-        ps.setInt(1, id);
-        
-        ResultSet rs=ps.executeQuery();
-        
-        while(rs.next()){
-                Menu m=new Menu();
-                m.setIdMenu(rs.getInt(1));                
-                m.setNoMenu(rs.getInt(2));
-                m.setCaloriasMenu(rs.getFloat(3));
-                lista.add(m);            
-        }
-        
-        con.close();
-        
-        
-        }catch(Exception d){
-            System.out.println("Error");
-            System.out.println(d.getMessage());
-            System.out.println(d.getStackTrace());
-        }
-        
-        return lista;
-    }
-    
-    
-    
+       
 }

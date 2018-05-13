@@ -78,6 +78,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                     res=0;
                 //nombreUsuario,FechaNacimiento,Ocupacion,FechaUltVez,FechaRegistro,SexoS,ActividadS,PesoS,EstaturaS;
                     String resultadonombreUsuario, resultadoOcupacion,resultadoEstatura,resultadoPeso;
+                    
                     resultadonombreUsuario = validanombreUsuario(nombreUsuario,50,1);  
                     if (resultadonombreUsuario!="OK")
                             res+=1;
@@ -91,9 +92,30 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                             res+=1;
                     
                     resultadoPeso = validanumerodecimal(PesoS,6,1);
+                    pesoUsuario = 0;
+                    Estatura = 0;
                     if (resultadoPeso!="OK")
                             res+=1;
-                    
+                    if (res==0){
+                        pesoUsuario = Float.parseFloat(PesoS);
+                        if (pesoUsuario< 50){
+                            resultadoPeso = "El peso capturado no puede ser menor a 50 Kg.";
+                            res +=1;
+                        }
+                         if (pesoUsuario> 150){
+                            resultadoPeso = "El peso capturado no puede ser mayor a 150 Kg.";
+                            res +=1;
+                        }
+                        Estatura = Float.parseFloat(EstaturaS);
+                        if (Estatura< 120){
+                            resultadoEstatura = "La estatura capturada no puede ser menor a 120 cm.";
+                            res +=1;
+                        }
+                         if (Estatura> 200){
+                            resultadoEstatura = "La estatura capturada no puede ser mayor a 200 cm.";
+                            res +=1;
+                        }
+                    }
                     if(res==0){
                         
                         Sexo s = new Sexo();
@@ -107,11 +129,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                         Perfil p = new Perfil();
                         p = PerfilDao.getPerfilByName("Usuario");
                         idPerfil = p.getIdPerfil();
-                        
-                        pesoUsuario = Float.parseFloat(PesoS);
-                        Estatura = Float.parseFloat(EstaturaS);
-                        
-                        
+                                           
                          //FechaNacimiento                                                    
                         //out.println("id FechaUltVez: " +FechaNacimiento);
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -159,7 +177,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                             out.println("<body>");
                             out.println("<script type=\"text/javascript\">");
                             out.println("swal({title: \"Excelente!\",text: \"Has completado tu registro exitosamente.\",type: \"success\"},");
-                            out.println("function () {window.location.href = 'inicio.html';});");
+                            out.println("function () {window.location.href = 'inicio.jsp';});");
                             out.println("</script>"); 
                             out.println("</body>");
                             out.println("</html>"); 
@@ -584,8 +602,28 @@ public class RegistrarUsuarioServlet extends HttpServlet {
     public Float CalculaHarrisBenedict(float peso, float estatura, int sexo, int actividad, int Edad) throws ServletException{
         float Calorias=0;
         try{                        
-        
-            Calorias = 100;
+            if (sexo==2){
+                //es Mujer
+                Calorias =((10 * peso) + (6.25f * estatura) -(5f * Edad) + 5f);
+            }
+            else{
+                //es Hombre
+                Calorias =((10 * peso) + (6.25f * estatura) -(5f * Edad) - 161f);
+            }
+            //1 poca
+            //2 mediana
+            //3 mucha
+            if (actividad == 1){
+                Calorias = Calorias * 1.2f;
+            }
+            else{
+                if (actividad == 2){
+                    Calorias = Calorias * 1.55f;
+                }
+                else{
+                    Calorias = Calorias * 1.9f;
+                }
+            }
         }catch(Exception e){
             System.out.println("Sólo jugó contigo ¬¬");
         }

@@ -10,7 +10,7 @@ package Data;
  * @author Diego
  */
 public class Menu {
-    private int idMenu,idGrupoEtapa,noMenu;
+    private int idMenu,noMenu;
     private float caloriasMenu;
 
     public int getIdMenu() {
@@ -20,15 +20,7 @@ public class Menu {
     public void setIdMenu(int idMenu) {
         this.idMenu = idMenu;
     }
-
-    public int getIdGrupoEtapa() {
-        return idGrupoEtapa;
-    }
-
-    public void setIdGrupoEtapa(int idGrupoEtapa) {
-        this.idGrupoEtapa = idGrupoEtapa;
-    }
-
+    
     public int getNoMenu() {
         return noMenu;
     }
