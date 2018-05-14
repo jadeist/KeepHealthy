@@ -12,6 +12,22 @@
         <servlet-name>CierraRegimenServlet</servlet-name>
         <servlet-class>Servlets.CierraRegimenServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RestriccionesServlet</servlet-name>
+        <servlet-class>Servlets.RestriccionesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ValidaRestriccionesServlet</servlet-name>
+        <servlet-class>Servlets.ValidaRestriccionesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarPerfilServlet</servlet-name>
+        <servlet-class>Servlets.EditarPerfilServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ValidaEdicionUsuarioServlet</servlet-name>
+        <servlet-class>Servlets.ValidaEdicionUsuarioServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistrarUsuarioServlet</servlet-name>
         <url-pattern>/RegistrarUsuarioServlet</url-pattern>
@@ -23,6 +39,22 @@
     <servlet-mapping>
         <servlet-name>CierraRegimenServlet</servlet-name>
         <url-pattern>/CierraRegimenServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestriccionesServlet</servlet-name>
+        <url-pattern>/RestriccionesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ValidaRestriccionesServlet</servlet-name>
+        <url-pattern>/ValidaRestriccionesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarPerfilServlet</servlet-name>
+        <url-pattern>/EditarPerfilServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ValidaEdicionUsuarioServlet</servlet-name>
+        <url-pattern>/ValidaEdicionUsuarioServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

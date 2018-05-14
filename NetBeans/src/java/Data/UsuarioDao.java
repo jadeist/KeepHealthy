@@ -90,7 +90,7 @@ public class UsuarioDao {
         return estatus;
     }
     
-    public static int Actualizar(Usuario u) throws SQLException{
+   public static int Actualizar(Usuario u) throws SQLException{
         
         int estatus=0;
         
@@ -112,7 +112,7 @@ public class UsuarioDao {
               + "idActividad=?,"
               + "FechaRegistro=?,"
               + "FechaUltVez=?,"
-              + "CaloriasDiarias=?,"
+              + "CaloriasDiarias=? "
               + "where idUsuario=?";
         PreparedStatement ps =con.prepareStatement(q);
 
@@ -182,7 +182,7 @@ public class UsuarioDao {
         try{
         Connection con=UsuarioDao.getConnection();
         String q;
-        q="Select * from Usuario where id_Usuario=?";
+        q="Select idUsuario, Nickname, Contrasena, IdPerfil, NombreUsuario, IdSexo, FechaNacimiento, PesoUsuario, Estatura, Ocupacion, IdActividad, FechaRegistro, FechaUltVez, CaloriasDiarias from Usuario where id_Usuario=?";
         
         PreparedStatement ps =con.prepareStatement(q);
         
@@ -231,7 +231,7 @@ public class UsuarioDao {
         try{
         Connection con=UsuarioDao.getConnection();
         String q;
-        q="Select * from Usuario where Nickname=?";
+        q="Select idUsuario,Nickname,Contrasena,IdPerfil,NombreUsuario,IdSexo,FechaNacimiento,PesoUsuario,Estatura,Ocupacion,IdActividad,FechaRegistro,FechaUltVez,CaloriasDiarias from Usuario where Nickname=?";
         
         PreparedStatement ps =con.prepareStatement(q);
         

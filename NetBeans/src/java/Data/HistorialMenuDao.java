@@ -253,7 +253,7 @@ public class HistorialMenuDao {
         try{
             Connection con=HistorialMenuDao.getConnection();
             String q;
-            q="Select *from HistorialMenu where idUsuario = ? ";
+            q="Select *from HistorialMenu where idUsuario = ? order by fechaCreacion desc";
 
             PreparedStatement ps =con.prepareStatement(q);
              ps.setInt(1, idUsuario);

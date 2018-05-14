@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-public class RegistrarUsuarioServlet extends HttpServlet {
+public class ValidaEdicionUsuarioServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -28,262 +28,259 @@ public class RegistrarUsuarioServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            String Nickname,Contrasena,Contrasena2,nombreUsuario,FechaNacimiento,Ocupacion,FechaUltVez,FechaRegistro,SexoS,ActividadS,PesoS,EstaturaS;
+            String Nickname;//,Contrasena,Contrasena2,
+            String nombreUsuario,FechaNacimiento,Ocupacion,ActividadS,PesoS,EstaturaS;
             int idPerfil;
             int idSexo,idActividad;
             float pesoUsuario,Estatura,CaloriasDiarias;
             
             Nickname=request.getParameter("Nickname");
-            Contrasena=request.getParameter("Contrasena");
-            Contrasena2=request.getParameter("Contrasena2");
-            nombreUsuario=request.getParameter("nombreUsuario");
-            SexoS=request.getParameter("SexoS");
+            //Contrasena=request.getParameter("Contrasena");
+            //Contrasena2=request.getParameter("Contrasena2");
+            nombreUsuario=request.getParameter("Nombre");
+            //SexoS=request.getParameter("SexoS");
             ActividadS=request.getParameter("ActividadS");
-            PesoS=request.getParameter("PesoUsuario");
+            PesoS=request.getParameter("Peso");
             EstaturaS=request.getParameter("Estatura");
-            FechaNacimiento=request.getParameter("FechaNacimiento");
+            //FechaNacimiento=request.getParameter("FechaNacimiento");
             Ocupacion = request.getParameter("Ocupacion");
 
-            String resultadonombre, resultadopassword;
-            int res;
-          
-            res = 0;
+            Usuario u=new Usuario();
             
-            resultadonombre = validanombre(Nickname,15,1);
-            if (resultadonombre!="OK")
-                    res+=1;
-            resultadopassword = validapass(Contrasena,Contrasena2,15,1);
-            if (resultadopassword!="OK")
-                    res+=1;
-            if(res==0){
-                Usuario u=new Usuario();
-            
-                u=UsuarioDao.getUsuarioByNickname(Nickname);
+            u=UsuarioDao.getUsuarioByNickname(Nickname);
 
-                if((u.getNickname())!=null){
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<script src='assets/js/sweetalert.min.js'></script>");
-                    out.println("<link href='assets/css/sweetalert.css' rel='stylesheet' type='text/css'/>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<script type='text/javascript'>");
-                    out.println("swal({title: 'Lo sentimos :(',text: 'El usuario que estás intentando registrar ya ha sido registrado.',type: 'error'},");
-                    out.println("function () {window.location.href = 'index.html?#four';});");
-                    out.println("</script>"); 
-                    out.println("</body>");
-                    out.println("</html>");                    
-                }
-                else{
-                    res=0;
-                //nombreUsuario,FechaNacimiento,Ocupacion,FechaUltVez,FechaRegistro,SexoS,ActividadS,PesoS,EstaturaS;
-                    String resultadonombreUsuario, resultadoOcupacion,resultadoEstatura,resultadoPeso;
-                    
-                    resultadonombreUsuario = validanombreUsuario(nombreUsuario,50,1);  
-                    if (resultadonombreUsuario!="OK")
-                            res+=1;
-                   
-                    resultadoOcupacion = validanombreUsuario(Ocupacion,20,1);
-                    if (resultadoOcupacion!="OK")
-                            res+=1;
-                    
-                    resultadoEstatura = validanumerodecimal(EstaturaS,6,1);                    
-                    if (resultadoEstatura!="OK")
-                            res+=1;
-                    
-                    resultadoPeso = validanumerodecimal(PesoS,6,1);
-                    pesoUsuario = 0;
-                    Estatura = 0;
-                    if (resultadoPeso!="OK")
-                            res+=1;
-                    if (res==0){
-                        pesoUsuario = Float.parseFloat(PesoS);
-                        if (pesoUsuario< 50){
-                            resultadoPeso = "El peso capturado no puede ser menor a 50 Kg.";
-                            res +=1;
-                        }
-                         if (pesoUsuario> 150){
-                            resultadoPeso = "El peso capturado no puede ser mayor a 150 Kg.";
-                            res +=1;
-                        }
-                        Estatura = Float.parseFloat(EstaturaS);
-                        if (Estatura< 120){
-                            resultadoEstatura = "La estatura capturada no puede ser menor a 120 cm.";
-                            res +=1;
-                        }
-                         if (Estatura> 200){
-                            resultadoEstatura = "La estatura capturada no puede ser mayor a 200 cm.";
-                            res +=1;
-                        }
-                    }
-                    if(res==0){
-                        
-                        Sexo s = new Sexo();
-                        s = SexoDao.getSexoByName(SexoS);
-                        idSexo = s.getIdSexo();
-                        
-                        Actividad a = new Actividad();
-                        a = ActividadDao.getActividadByName(ActividadS);
-                        idActividad = a.getIdActividad();
-                        
-                        Perfil p = new Perfil();
-                        p = PerfilDao.getPerfilByName("Usuario");
-                        idPerfil = p.getIdPerfil();
-                                           
-                         //FechaNacimiento                                                    
-                        //out.println("id FechaUltVez: " +FechaNacimiento);
-                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                        java.util.Date dateFechaNacimiento = formatter.parse(FechaNacimiento);
-                        java.sql.Date datesqlFechaNacimiento = new java.sql.Date(dateFechaNacimiento.getTime());
-                        
-                        int Edad= calculaEdad(dateFechaNacimiento);
-                        
-                        //CaloriasDiarias
-                        CaloriasDiarias = CalculaHarrisBenedict(pesoUsuario, Estatura, idSexo, idActividad, Edad);
-//                        out.println("id CaloriasDiarias: " +CaloriasDiarias);
-                        //FechaRegistro                  
-                        java.util.Date d = new java.util.Date();  
-                        java.sql.Date date2 = new java.sql.Date(d.getTime());
-                       
-                        u = new Usuario();
-
-                        u.setNickname(Nickname);
-                        u.setContrasena(Contrasena);
-                        u.setIdperfil(idPerfil);                        
-                        u.setNombreUsuario(nombreUsuario);                        
-                        u.setIdsexo(idSexo);    
-                        u.setFechaNacimiento(datesqlFechaNacimiento);                                              
-                        u.setPesoUsuario(pesoUsuario);
-                        u.setEstatura(Estatura);
-                        u.setOcupacion(Ocupacion);
-                        u.setIdActividad(idActividad);
-                        u.setFechaRegistro(date2);                                        
-                        u.setFechaUltVez(date2);                        
-                        u.setCaloriasDiarias(CaloriasDiarias);
-                        
-                        int estatus = UsuarioDao.Guardar(u);
-                        HttpSession sesion=request.getSession();
-                        if(estatus>0){
-    /* 
-                            getRequestDispatcher se encarga de redireccionar un evento establecido por
-                            parte del back ened, de modo que el usuario nunca ve el proceso de 
-                            dicha accion
-                            */
-                            out.println("<html>");
-                            out.println("<head>");
-                            out.println("<script src='assets/js/sweetalert.min.js'></script>");
-                            out.println("<link href='assets/css/sweetalert.css' rel='stylesheet' type='text/css'/>");
-                            out.println("</head>");
-                            out.println("<body>");
-                            out.println("<script type='text/javascript'>");
-                            out.println("swal({title: 'Excelente!',text: 'Has completado tu registro exitosamente.',type: 'success'},");
-                            out.println("function () {window.location.href = 'inicio.jsp';});");
-                            out.println("</script>"); 
-                            out.println("</body>");
-                            out.println("</html>"); 
-                        }
-                        else{
-                            out.println("<html>");
-                            out.println("<head>");
-                            out.println("<script src='assets/js/sweetalert.min.js'></script>");
-                            out.println("<link href='assets/css/sweetalert.css' rel='stylesheet' type='text/css'/>");
-                            out.println("</head>");
-                            out.println("<body>");
-                            out.println("<script type='text/javascript'>");
-                            out.println("swal({title: 'Lo sentimos :(',text: 'Has excedido el tiempo limite de registro, intentalo de nuevo.',type: 'warning'},");
-                            out.println("function () {window.location.href = 'index.html?#four';});");
-                            out.println("</script>"); 
-                            out.println("</body>");
-                            out.println("</html>");    
-                        }
-                        out.close();                                                
-                    }
-                    else{  //SEGUNDOS ERRORES
-                        
-                        out.println("<html>");
-                        out.println("<head>");
-                        out.println("<script src='assets/js/sweetalert.min.js'></script>");
-                        out.println("<link href='assets/css/sweetalert.css' rel='stylesheet' type='text/css'/>");
-                        out.println("</head>");
-                        out.println("<body>");                                                
-                        if (resultadonombreUsuario!="OK"){
-                            out.println("<script type='text/javascript'>");
-                            out.println("swal({title:'Ocurrio un error',");
-                            out.println("text: 'Error en el nombre de usuario: "+resultadonombreUsuario+"',type:'error'},");
-                            out.println("function () {window.location.href = 'index.html?#four';});");
-                            out.println("</script>"); 
-                            out.println("</body>");
-                            out.println("</html>");
-                        }
-                        else{
-                            if (resultadoOcupacion!="OK"){
-                                out.println("<script type='text/javascript'>");
-                                out.println("swal({title:'Ocurrio un error',");                         
-                                out.println("text:'Error en la ocupacion del usuario:"+resultadoOcupacion+"',type:'error'},");
-                                out.println("function () {window.location.href = 'index.html?#four';});");
-                                out.println("</script>"); 
-                                out.println("</body>");
-                                out.println("</html>");
-                            }
-                            else{
-                                if (resultadoEstatura!="OK"){
-                                    out.println("<script type='text/javascript'>");
-                                    out.println("swal({title:'Ocurrio un error',");                         
-                                    out.println("text:'Error en la estatura del usuario: "+resultadoEstatura+"',type:'error'},");
-                                    out.println("function () {window.location.href = 'index.html?#four';});");
-                                    out.println("</script>"); 
-                                    out.println("</body>");
-                                    out.println("</html>");
-                                }
-                                else{
-                                    if (resultadoPeso!="OK"){
-                                        out.println("<script type='text/javascript'>");
-                                    out.println("swal({title:'Ocurrio un error',");  
-                                        out.println("text:'Error en el peso del usuario: "+resultadoPeso+"',type:'error'},");
-                                        out.println("function () {window.location.href = 'index.html?#four';});");
-                                        out.println("</script>"); 
-                                        out.println("</body>");
-                                        out.println("</html>"); 
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else{
+            if((u.getNickname())==null){
+              
                 out.println("<html>");
                 out.println("<head>");
                 out.println("<script src='assets/js/sweetalert.min.js'></script>");
                 out.println("<link href='assets/css/sweetalert.css' rel='stylesheet' type='text/css'/>");
                 out.println("</head>");
                 out.println("<body>");
-               
+                out.println("<script type='text/javascript'>");
+                out.println("swal({title: 'Lo sentimos :(',text: 'Ocurrio error.',type: 'error'},");
+                out.println("function () {window.location.href = 'index.html?#four';});");
+                out.println("</script>"); 
+                out.println("</body>");
+                out.println("</html>");                    
+            }
+            else{
                 
-                if (resultadonombre!="OK"){
-                    out.println("<script type='text/javascript'>");
-                    out.println("swal({title: 'Ocurrio un error',");
-                    out.println("text: 'Error en el Nickname del usuario: "+resultadonombre+" ',type: 'error'},");
-                    out.println("function () {window.location.href = 'index.html?#four';});");
-                    out.println("</script>"); 
-                    out.println("</body>");
-                    out.println("</html>");
-                }                  
-                else{
-                    if (resultadopassword!="OK"){
+                int res=0;
+                //nombreUsuario,FechaNacimiento,Ocupacion,FechaUltVez,FechaRegistro,SexoS,ActividadS,PesoS,EstaturaS;
+                String resultadonombreUsuario, resultadoOcupacion,resultadoEstatura,resultadoPeso;
+
+                resultadonombreUsuario = validanombreUsuario(nombreUsuario,50,1);  
+                if (resultadonombreUsuario!="OK")
+                        res+=1;
+
+                resultadoOcupacion = validanombreUsuario(Ocupacion,20,1);
+                if (resultadoOcupacion!="OK")
+                        res+=1;
+
+                resultadoEstatura = validanumerodecimal(EstaturaS,6,1);                    
+                if (resultadoEstatura!="OK")
+                        res+=1;
+
+                resultadoPeso = validanumerodecimal(PesoS,6,1);
+                pesoUsuario = 0;
+                Estatura = 0;
+                if (resultadoPeso!="OK")
+                        res+=1;
+                if (res==0){
+                    pesoUsuario = Float.parseFloat(PesoS);
+                    if (pesoUsuario< 50){
+                        resultadoPeso = "El peso capturado no puede ser menor a 50 Kg.";
+                        res +=1;
+                    }
+                     if (pesoUsuario> 150){
+                        resultadoPeso = "El peso capturado no puede ser mayor a 150 Kg.";
+                        res +=1;
+                    }
+                    Estatura = Float.parseFloat(EstaturaS);
+                    if (Estatura< 120){
+                        resultadoEstatura = "La estatura capturada no puede ser menor a 120 cm.";
+                        res +=1;
+                    }
+                     if (Estatura> 200){
+                        resultadoEstatura = "La estatura capturada no puede ser mayor a 200 cm.";
+                        res +=1;
+                    }
+                }
+                if(res==0){
+
+//                    Sexo s = new Sexo();
+//                    s = SexoDao.getSexoByName(SexoS);
+//                    idSexo = s.getIdSexo();
+
+                    Actividad a = new Actividad();
+                    a = ActividadDao.getActividadByName(ActividadS);
+                    idActividad = a.getIdActividad();
+
+//                    Perfil p = new Perfil();
+//                    p = PerfilDao.getPerfilByName("Usuario");
+//                    idPerfil = p.getIdPerfil();
+
+                     //FechaNacimiento                                                    
+                    //out.println("id FechaUltVez: " +FechaNacimiento);
+                    
+                    //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    
+                    java.sql.Date datesqlFechaNacimiento = u.getFechaNacimiento();
+
+                    int Edad= calculaEdad(datesqlFechaNacimiento);
+                    idSexo = u.getIdsexo();
+                    //CaloriasDiarias
+                    CaloriasDiarias = CalculaHarrisBenedict(pesoUsuario, Estatura, idSexo, idActividad, Edad);
+//                        out.println("id CaloriasDiarias: " +CaloriasDiarias);
+                    //FechaRegistro                  
+                    java.util.Date d = new java.util.Date();  
+                    java.sql.Date date2 = new java.sql.Date(d.getTime());
+
+                    //u = new Usuario();
+
+                    //u.setNickname(Nickname);
+                   // u.setContrasena(Contrasena);
+                   // u.setIdperfil(idPerfil);                        
+                    u.setNombreUsuario(nombreUsuario);                        
+                    //u.setIdsexo(idSexo);    
+                    //u.setFechaNacimiento(datesqlFechaNacimiento);                                              
+                    u.setPesoUsuario(pesoUsuario);
+                    u.setEstatura(Estatura);
+                    u.setOcupacion(Ocupacion);
+                    u.setIdActividad(idActividad);
+                    //u.setFechaRegistro(date2);                                        
+                    //u.setFechaUltVez(date2);                        
+                    u.setCaloriasDiarias(CaloriasDiarias);
+
+                    int estatus = UsuarioDao.Actualizar(u);
+                    HttpSession sesion=request.getSession();
+                    if(estatus>0){
+/* 
+                        getRequestDispatcher se encarga de redireccionar un evento establecido por
+                        parte del back ened, de modo que el usuario nunca ve el proceso de 
+                        dicha accion
+                        */
+                    out.println("<html>"
+                        +"<head>"
+                        +"<title>KeepHealthy | Edicion Usuario </title>"
+                        +"<meta charset='utf-8' />"
+                        +"<meta name='viewport' content='width=device-width, initial-scale=1' />"
+                        +"<link rel='stylesheet' href='assets/css/main.css' />"
+                        +"<link rel='stylesheet' href='assets/css/bootstrap.css'>"
+                        +"</head><body class='landing'>"
+                        +"<header id='navmain-header'>"
+                        +"<div class='container'>"
+                        +"<nav class='navbar navbar-default'>"
+                        +"<div class='navbar-header'>"
+                        +"<a href='#' class='js-navmain-nav-toggle navmain-nav-toggle' data-toggle='collapse' data-target='#navbar' aria-expanded='false' aria-controls='navbar'><i></i></a>"
+                        +"<a class='navbar-brand'>KeepHealthy</a>"
+                        +"</div><div id='navbar' class='navbar-collapse collapse'>"
+                        +"</div></nav></div></header>"
+                        +"<section id='InicioSesion' class='wrapper style2 special'>"
+                        +"<div class='inner'>"
+                        +"<header class='major narrow'>"
+                        +"<h2>Usuario Actualizado "+Nickname+"</h2>"
+                        +"</header>"
+                        +"<form action='perfil.jsp' method='POST'>"
+                        +"<div class='container 75%'>"
+                        +"<div class='row uniform 50%'>"
+                        +"<div class='6u 12u(xsmall)'>"
+                        +"<input name='Nickname' value='"+Nickname+"' type='hidden' />"
+                        +"</div></div></div>"
+                        + "<ul class='actions'>"
+                        +"<li><input type='submit' class='special' value='OK' /></li>"
+                        +"</ul></form></div>"
+                        +"</section>"
+                        +"<footer id='footer'>"
+                        +"<div class='inner'>"
+                        +"<ul class='icons'>"
+                        +"<li><a href='#' class='icon fa-github'>"
+                        +"<span class='label'>Github</span>"
+                        +"</a></li>"
+                        +"</ul>"
+                        +"<ul class='copyright'>"
+                        +"<li>&copy; TYFONWARE 2018.</li>"
+                        +"<li style='text-transform: lowercase'>Imagenes de <a href='http://unsplash.com'>Unsplash</a>.</li>"
+                        +"</ul></div></footer>"
+                        +"<script src='assets/js/jquery.min.js'></script>"
+                        +"<script src='assets/js/skel.min.js'></script>"
+                        +"<script src='assets/js/util.js'></script>"
+                        +"<script src='assets/js/main.js'></script>"
+                        +"<script src='assets/js/bootstrap.min.js'></script>"
+                        +"</body>"
+                        +"</html>");
+                    }
+                    else{
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<script src='assets/js/sweetalert.min.js'></script>");
+                        out.println("<link href='assets/css/sweetalert.css' rel='stylesheet' type='text/css'/>");
+                        out.println("</head>");
+                        out.println("<body>");
                         out.println("<script type='text/javascript'>");
-                        out.println("swal({title: 'Ocurrio un error',");
-                        out.println("text: 'Error en el campo de contraseña: "+resultadopassword+"',type: 'error'},");
+                        out.println("swal({title: 'Lo sentimos :(',text: 'Has excedido el tiempo limite de registro, intentalo de nuevo.',type: 'warning'},");
+                        out.println("function () {window.location.href = 'index.html?#four';});");
+                        out.println("</script>"); 
+                        out.println("</body>");
+                        out.println("</html>");    
+                    }
+                    out.close();                                                
+                }
+                else{  //SEGUNDOS ERRORES
+
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<script src='assets/js/sweetalert.min.js'></script>");
+                    out.println("<link href='assets/css/sweetalert.css' rel='stylesheet' type='text/css'/>");
+                    out.println("</head>");
+                    out.println("<body>");                                                
+                    if (resultadonombreUsuario!="OK"){
+                        out.println("<script type='text/javascript'>");
+                        out.println("swal({title:'Ocurrio un error',");
+                        out.println("text: 'Error en el nombre de usuario: "+resultadonombreUsuario+"',type:'error'},");
                         out.println("function () {window.location.href = 'index.html?#four';});");
                         out.println("</script>"); 
                         out.println("</body>");
                         out.println("</html>");
-                    }       
-                }                                                      
-            }             
+                    }
+                    else{
+                        if (resultadoOcupacion!="OK"){
+                            out.println("<script type='text/javascript'>");
+                            out.println("swal({title:'Ocurrio un error',");                         
+                            out.println("text:'Error en la ocupacion del usuario:"+resultadoOcupacion+"',type:'error'},");
+                            out.println("function () {window.location.href = 'index.html?#four';});");
+                            out.println("</script>"); 
+                            out.println("</body>");
+                            out.println("</html>");
+                        }
+                        else{
+                            if (resultadoEstatura!="OK"){
+                                out.println("<script type='text/javascript'>");
+                                out.println("swal({title:'Ocurrio un error',");                         
+                                out.println("text:'Error en la estatura del usuario: "+resultadoEstatura+"',type:'error'},");
+                                out.println("function () {window.location.href = 'index.html?#four';});");
+                                out.println("</script>"); 
+                                out.println("</body>");
+                                out.println("</html>");
+                            }
+                            else{
+                                if (resultadoPeso!="OK"){
+                                    out.println("<script type='text/javascript'>");
+                                out.println("swal({title:'Ocurrio un error',");  
+                                    out.println("text:'Error en el peso del usuario: "+resultadoPeso+"',type:'error'},");
+                                    out.println("function () {window.location.href = 'index.html?#four';});");
+                                    out.println("</script>"); 
+                                    out.println("</body>");
+                                    out.println("</html>"); 
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+                    
         } catch (SQLException ex) {
-            Logger.getLogger(RegistrarUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
             Logger.getLogger(RegistrarUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

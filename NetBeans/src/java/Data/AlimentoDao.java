@@ -88,7 +88,7 @@ public class AlimentoDao {
         try{
             Connection con=AlimentoDao.getConnection();
             String q;
-            q="Select *from Alimento where idCategoria =? ";
+            q="Select * from Alimento where idCategoria =? ";
 
             PreparedStatement ps =con.prepareStatement(q);
             ps.setInt(1, idCategoria);
@@ -115,5 +115,37 @@ public class AlimentoDao {
         
         return lista;
     }
+    public static List<Alimento> getAllAlimentos() throws SQLException{
         
+        List<Alimento> lista =new ArrayList<Alimento>();
+        
+        try{
+            Connection con=AlimentoDao.getConnection();
+            String q;
+            q="Select * from Alimento";
+
+            PreparedStatement ps =con.prepareStatement(q);
+            ResultSet rs=ps.executeQuery();
+
+            while(rs.next()){                
+                    Alimento a=new Alimento(); 
+                    a.setIdAlimento(rs.getInt(1));
+                    a.setIdCategoria(rs.getInt(2));
+                    a.setNombreAlimento(rs.getString(3));
+                    a.setPorcion(rs.getString(4));
+                    a.setCalorias(rs.getFloat(5));
+                    lista.add(a);
+            }
+
+            con.close();
+
+
+        }catch(Exception d){
+            System.out.println("Error");
+            System.out.println(d.getMessage());
+            System.out.println(d.getStackTrace());
+        }
+        
+        return lista;
+    }    
 }

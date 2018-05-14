@@ -34,100 +34,118 @@ public class ValidarUsuarioServlet extends HttpServlet {
 
             String resultadonombre, resultadopassword;
             int res;
-          
+            resultadopassword="";
+            resultadonombre="";
             res = 0;
             
-            resultadonombre = validanombre(Nickname,15,1);
-            if (resultadonombre!="OK")
-                    res+=1;
-            resultadopassword = validapass(Contrasena,15,1);
-            if (resultadopassword!="OK")
-                    res+=1;
+            if (Nickname.isEmpty()){               
+                resultadonombre ="El nombre de usuario es obligatorio";
+                res+=1;
+            }
+            else{                                       
+                resultadonombre = validanombre(Nickname,15,1);
+                if (resultadonombre!="OK")
+                        res+=1;
+                resultadopassword = validapass(Contrasena,15,1);
+                if (resultadopassword!="OK")
+                        res+=1;
+            }    
             if(res==0){
+               
                 Usuario u=new Usuario();
             
                 u=UsuarioDao.VerificarUsuario(Nickname,Contrasena);
 
                 if((u.getNickname())!=null){                    
                     //usuario existente 
-                    out.println("<html>\n" +
-"	<head>\n" +
-"		<title>KeepHealthy | Bienvenido </title>\n" +
-"		<meta charset=\"utf-8\" />\n" +
-"		<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n" +
-"		<link rel=\"stylesheet\" href=\"assets/css/main.css\" />\n" +
-"	    <link rel=\"stylesheet\" href=\"assets/css/bootstrap.css\">\n" +
-"	</head>\n" +
-"\n" +
-"	<body class=\"landing\">\n" +
-"		<header id=\"navmain-header\">\n" +
-"			<div class=\"container\">\n" +
-"			    <nav class=\"navbar navbar-default\">\n" +
-"		        	<div class=\"navbar-header\">\n" +
-"						<a href=\"#\" class=\"js-navmain-nav-toggle navmain-nav-toggle\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\"><i></i></a>\n" +
-"		         		<a class=\"navbar-brand\">KeepHealthy</a>\n" +
-"		    		</div>\n" +
-"                                \n" +
-"		    		<div id=\"navbar\" class=\"navbar-collapse collapse\">\n" +
-"                                 \n" +
-"                                \n" +
-"		    		</div>\n" +
-"                                \n" +
-"				</nav>\n" +
-"		  	</div>\n" +
-"		</header>						\n" +
-"			<section id=\"InicioSesion\" class=\"wrapper style2 special\">\n" +
-"				<div class=\"inner\">\n" +
-"					<header class=\"major narrow\">\n" +
-"						<h2>Bienvenido "+Nickname+"</h2>\n" +
-"					</header>\n" +
-"					<form action='inicio.jsp' method=\"POST\">\n" +
-"						<div class=\"container 75%\">\n" +
-"							<div class=\"row uniform 50%\">\n" +
-"								<div class=\"6u 12u(xsmall)\">\n" +
-"									<input name=\"Nickname\" value='"+Nickname+"' type='hidden' />\n" +
-"								</div>\n" +
-"							</div>\n" +
-"						</div>\n" +
-"						<ul class=\"actions\">                                                    \n" +
-"							<li><input type=\"submit\" class=\"special\" value=\"OK\" /></li>\n" +
-"                                                </ul>\n" +
-"					</form>\n" +
-"				</div>\n" +
-"			</section>\n" +
-"			<footer id=\"footer\">\n" +
-"				<div class=\"inner\">\n" +
-"					<ul class=\"icons\">\n" +
-"						<li><a href=\"#\" class=\"icon fa-github\">\n" +
-"							<span class=\"label\">Github</span>\n" +
-"						</a></li>\n" +
-"					</ul>\n" +
-"					<ul class=\"copyright\">\n" +
-"						<li>&copy; TYFONWARE 2018.</li>\n" +
-"						<li style=\"text-transform: lowercase\">Imagenes de <a href=\"http://unsplash.com\">Unsplash</a>.</li>\n" +
-"					</ul>\n" +
-"				</div>\n" +
-"			</footer>\n" +
-"\n" +
-"			<script src=\"assets/js/jquery.min.js\"></script>\n" +
-"			<script src=\"assets/js/skel.min.js\"></script>\n" +
-"			<script src=\"assets/js/util.js\"></script>\n" +
-"			<script src=\"assets/js/main.js\"></script>\n" +
-"			<script src=\"assets/js/bootstrap.min.js\"></script>\n" +
-"	</body>\n" +
-"</html>");
+                    int idUsuario = u.getIdUsuario();
+                    java.util.Date d = new java.util.Date();   
+                    java.sql.Date datesqlFechaUltVez = new java.sql.Date(d.getTime());
+                    
+                    u.setFechaUltVez(datesqlFechaUltVez);
+                    int estatus = UsuarioDao.Actualizar(u);
+                    HttpSession sesion=request.getSession();
+                    if(estatus>0){
+                        //si actualizo fecha ultima vez
+                         out.println("<html>"
+                        +"<head>"
+                        +"<title>KeepHealthy | Bienvenido </title>"
+                        +"<meta charset='utf-8' />"
+                        +"<meta name='viewport' content='width=device-width, initial-scale=1' />"
+                        +"<link rel='stylesheet' href='assets/css/main.css' />"
+                        +"<link rel='stylesheet' href='assets/css/bootstrap.css'>"
+                        +"</head><body class='landing'>"
+                        +"<header id='navmain-header'>"
+                        +"<div class='container'>"
+                        +"<nav class='navbar navbar-default'>"
+                        +"<div class='navbar-header'>"
+                        +"<a href='#' class='js-navmain-nav-toggle navmain-nav-toggle' data-toggle='collapse' data-target='#navbar' aria-expanded='false' aria-controls='navbar'><i></i></a>"
+                        +"<a class='navbar-brand'>KeepHealthy</a>"
+                        +"</div><div id='navbar' class='navbar-collapse collapse'>"
+                        +"</div></nav></div></header>"
+                        +"<section id='InicioSesion' class='wrapper style2 special'>"
+                        +"<div class='inner'>"
+                        +"<header class='major narrow'>"
+                        +"<h2>Bienvenido "+Nickname+"</h2>"
+                        +"</header>"
+                        +"<form action='inicio.jsp' method='POST'>"
+                        +"<div class='container 75%'>"
+                        +"<div class='row uniform 50%'>"
+                        +"<div class='6u 12u(xsmall)'>"
+                        +"<input name='Nickname' value='"+Nickname+"' type='hidden' />"
+                        +"</div></div></div>"
+                        + "<ul class='actions'>"
+                        +"<li><input type='submit' class='special' value='OK' /></li>"
+                        +"</ul></form></div>"
+                        +"</section>"
+                        +"<footer id='footer'>"
+                        +"<div class='inner'>"
+                        +"<ul class='icons'>"
+                        +"<li><a href='#' class='icon fa-github'>"
+                        +"<span class='label'>Github</span>"
+                        +"</a></li>"
+                        +"</ul>"
+                        +"<ul class='copyright'>"
+                        +"<li>&copy; TYFONWARE 2018.</li>"
+                        +"<li style='text-transform: lowercase'>Imagenes de <a href='http://unsplash.com'>Unsplash</a>.</li>"
+                        +"</ul></div></footer>"
+                        +"<script src='assets/js/jquery.min.js'></script>"
+                        +"<script src='assets/js/skel.min.js'></script>"
+                        +"<script src='assets/js/util.js'></script>"
+                        +"<script src='assets/js/main.js'></script>"
+                        +"<script src='assets/js/bootstrap.min.js'></script>"
+                        +"</body>"
+                        +"</html>");
+                        
+                    }
+                    else{
+                         //usuario inexistente
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<script src='assets/js/sweetalert.min.js'></script>");
+                        out.println("<link href='assets/css/sweetalert.css' rel='stylesheet' type='text/css'/>");
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<script type='text/javascript'>");
+                        out.println("swal({title: 'Hubo un error',text: 'no se actualizo fecha ultima vez.',type: 'error'},");
+                        out.println("function () {window.location.href = 'InicioSesion.html';});");
+                        out.println("</script>"); 
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
+                   
                                                       
                 }
                 else{
                     //usuario inexistente
                     out.println("<html>");
                     out.println("<head>");
-                    out.println("<script src=\"assets/js/sweetalert.min.js\"></script>");
-                    out.println("<link href=\"assets/css/sweetalert.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+                    out.println("<script src='assets/js/sweetalert.min.js'></script>");
+                    out.println("<link href='assets/css/sweetalert.css' rel='stylesheet' type='text/css'/>");
                     out.println("</head>");
                     out.println("<body>");
-                    out.println("<script type=\"text/javascript\">");
-                    out.println("swal({title: \"Hubo un error\",text: \"Usuario o contraseña incorrecta.\",type: \"error\"},");
+                    out.println("<script type='text/javascript'>");
+                    out.println("swal({title: 'Hubo un error',text: 'Usuario o contraseña incorrecta.',type: 'error'},");
                     out.println("function () {window.location.href = 'InicioSesion.html';});");
                     out.println("</script>"); 
                     out.println("</body>");
@@ -135,31 +153,32 @@ public class ValidarUsuarioServlet extends HttpServlet {
                 }
                 out.close();
             }
-            else{
+            else{                
                 out.println("<html>");
                 out.println("<head>");
-                out.println("<script src=\"assets/js/sweetalert.min.js\"></script>");
-                out.println("<link href=\"assets/css/sweetalert.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+                out.println("<script src='assets/js/sweetalert.min.js'></script>");
+                out.println("<link href='assets/css/sweetalert.css' rel='stylesheet' type='text/css'/>");
                 out.println("</head>");
                 out.println("<body>");
-                out.println("<script type=\"text/javascript\">");
-                out.println("swal({title: \"Ocurrio un error\",");
+                out.println("<script type='text/javascript'>");
+               
                     
                 if (resultadonombre!="OK"){
-                    out.println("text: \"Error en el Nickname del usuario: "+resultadonombre+" \",type: \"error\"},");
-                    out.println("function () {window.location.href = 'InicioSesion.html';});");
+                    out.println("swal({title: 'Ocurrio un error',");
+                    out.println("text: 'Error en el Nickname del usuario: "+resultadonombre+" ',type: 'error'},");
+                    out.println("function () {window.location.href = 'InicioSesion.html';});");                   
                     out.println("</script>"); 
-                    out.println("</body>");
-                    out.println("</html>");
                 }
-                    
-                if (resultadopassword!="OK"){
-                    out.println("text: \"Error en el campo de contraseña: "+resultadopassword+" \",type: \"error\"},");
-                    out.println("function () {window.location.href = 'InicioSesion.html';});");
-                    out.println("</script>"); 
-                    out.println("</body>");
-                    out.println("</html>");
+                else{    
+                    if (resultadopassword!="OK"){
+                        out.println("swal({title: 'Ocurrio un error',");
+                        out.println("text: 'Error en el campo de contraseña: "+resultadopassword+" ',type: 'error'},");
+                        out.println("function () {window.location.href = 'InicioSesion.html';});");                
+                        out.println("</script>"); 
+                    }
                 }
+                out.println("</body>");
+                out.println("</html>");
             }             
         } 
         catch (SQLException ex) {
