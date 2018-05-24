@@ -60,7 +60,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
             
                 u=UsuarioDao.getUsuarioByNickname(Nickname);
 
-                if((u.getNickname())!=null){
+                if((u.getNickname())!=null & u.getEstatus()==1){
                     out.println("<html>");
                     out.println("<head>");
                     out.println("<script src='assets/js/sweetalert.min.js'></script>");
@@ -160,6 +160,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                         u.setFechaRegistro(date2);                                        
                         u.setFechaUltVez(date2);                        
                         u.setCaloriasDiarias(CaloriasDiarias);
+                        u.setEstatus(1);
                         
                         int estatus = UsuarioDao.Guardar(u);
                         HttpSession sesion=request.getSession();

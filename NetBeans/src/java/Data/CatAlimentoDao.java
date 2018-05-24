@@ -56,7 +56,7 @@ public class CatAlimentoDao {
         try{
             Connection con=CatAlimentoDao.getConnection();
             String q;
-            q="Select * from CatAlimento where idCatAlimento=?";
+            q="Select IdCategoria, DescripcionCategoria from CatAlimento where idCategoria=?";
 
             PreparedStatement ps =con.prepareStatement(q);
 

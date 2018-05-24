@@ -15,6 +15,7 @@ public class Usuario {
      private java.sql.Date FechaRegistro,FechaUltVez,FechaNacimiento;
     private int idUsuario,idperfil,idsexo,idActividad;
     private float pesoUsuario,Estatura,CaloriasDiarias;
+    private int Estatus;
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -130,6 +131,14 @@ public class Usuario {
 
     public void setFechaNacimiento(java.sql.Date FechaNacimiento) {
         this.FechaNacimiento = FechaNacimiento;
+    }
+
+    public int getEstatus() {
+        return Estatus;
+    }
+
+    public void setEstatus(int Estatus) {
+        this.Estatus = Estatus;
     }
 
   

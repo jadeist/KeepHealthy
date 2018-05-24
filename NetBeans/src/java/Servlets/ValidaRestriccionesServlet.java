@@ -35,7 +35,7 @@ public class ValidaRestriccionesServlet extends HttpServlet {
             
             Usuario u=new Usuario();
             u=UsuarioDao.getUsuarioByNickname(Nickname);
-            if((u.getNickname())!=null){                    
+            if((u.getNickname())!=null & u.getEstatus()==1){                    
                 //usuario existente 
                 int idUsuario = u.getIdUsuario();
                 //verificar que no haya seleccionado todos los alimentos para restringir

@@ -175,7 +175,65 @@ public class MenuDao {
         return m;
     }
      
-   
+    public static  Menu getMenuBynoMenu (int noMenu) throws SQLException{
+        
+        Menu m=new Menu();
+        
+        try{
+            Connection con=MenuDao.getConnection();
+            String q;
+            q="Select * from Menu where noMenu=?";
+
+            PreparedStatement ps =con.prepareStatement(q);
+
+            ps.setInt(1, noMenu);
+
+            ResultSet rs=ps.executeQuery();
+
+            if(rs.next()){
+                m.setIdMenu(rs.getInt(1));            
+                m.setNoMenu(rs.getInt(2));
+                m.setCaloriasMenu(rs.getFloat(3));
+            }
+            else{
+                m.setIdMenu(0);            
+                m.setNoMenu(0);
+                m.setCaloriasMenu(0f);
+            }
+            con.close();                
+        }catch(Exception d){
+            System.out.println("Error");
+            System.out.println(d.getMessage());
+            System.out.println(d.getStackTrace());
+        }
+        return m;
+    }
+       
+    public static  Menu getLastnoMenu () throws SQLException{
+        
+        Menu m=new Menu();                
+        try{
+            Connection con=MenuDao.getConnection();
+            String q;
+            q="Select max(noMenu) from Menu ";
+
+            PreparedStatement ps =con.prepareStatement(q);            
+
+            ResultSet rs=ps.executeQuery();
+
+            if(rs.next()){
+                m.setNoMenu(rs.getInt(1));                    
+            }
+            con.close();        
+        
+        }catch(Exception d){
+            System.out.println("Error");
+            System.out.println(d.getMessage());
+            System.out.println(d.getStackTrace());
+        }
+        return m;
+    }
+    
     public static List<Menu> getAllMenus(int id ) throws SQLException{
         
         List<Menu> lista =new ArrayList<Menu>();

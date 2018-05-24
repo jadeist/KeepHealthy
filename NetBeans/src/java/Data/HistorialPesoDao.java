@@ -165,7 +165,7 @@ public class HistorialPesoDao {
         try{
             Connection con=HistorialPesoDao.getConnection();
             String q;
-            q="Select *from HistorialPeso where idUsuario = ? order by fechaHistorial";
+            q="Select idHistorialPeso, FechaHistorial, IdUsuario, pesoHistorial, IdHistorialMenu from HistorialPeso where idUsuario = ? order by fechaHistorial";
 
             PreparedStatement ps =con.prepareStatement(q);
              ps.setInt(1, idUsuario);

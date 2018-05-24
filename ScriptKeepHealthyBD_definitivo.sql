@@ -145,8 +145,8 @@ insert into Alimento(nombreAlimento,idCategoria,Porcion,Calorias) values ('Agua'
 insert into Alimento(nombreAlimento,idCategoria,Porcion,Calorias) values ('Huevo',7,'2 claras',10);
 
 
-insert into Usuario(Nickname,Contrasena,idPerfil,nombreUsuario,idSexo,FechaNacimiento,PesoUsuario,Estatura,Ocupacion,idActividad,FechaRegistro,FechaUltVez,caloriasDiarias) values ('admin','admin',1,'Administrador',1,"2018-05-12 00:00:00",100,100,'Administrador',1,"2018-05-12 00:00:00","2018-05-12 00:00:00",100);
-insert into Usuario(Nickname,Contrasena,idPerfil,nombreUsuario,idSexo,FechaNacimiento,PesoUsuario,Estatura,Ocupacion,idActividad,FechaRegistro,FechaUltVez,caloriasDiarias) values ('usuario','usuario',2,'Usuario',1,"2018-05-12 00:00:00",100,100,'Estudiante',1,"2018-05-12 00:00:00","2018-05-12 00:00:00",100);
+insert into Usuario(Nickname,Contrasena,idPerfil,nombreUsuario,idSexo,FechaNacimiento,PesoUsuario,Estatura,Ocupacion,idActividad,FechaRegistro,FechaUltVez,caloriasDiarias) values ('admin','admin',1,'Administrador',1,"2000-12-02 00:00:00",150,150,'Administrador',1,"2018-05-12 00:00:00","2018-05-12 00:00:00",100);
+insert into Usuario(Nickname,Contrasena,idPerfil,nombreUsuario,idSexo,FechaNacimiento,PesoUsuario,Estatura,Ocupacion,idActividad,FechaRegistro,FechaUltVez,caloriasDiarias) values ('usuario','usuario',2,'Usuario',1,"2000-12-02 00:00:00",150,150,'Estudiante',1,"2018-05-12 00:00:00","2018-05-12 00:00:00",100);
 insert menu (noMenu,caloriasMenu) values (1,1);
 insert into grupoetapa (idetapamenu,idalimento,nomenu) values (1,1,1);
 insert into grupoetapa (idetapamenu,idalimento,nomenu) values (1,2,1);
@@ -164,5 +164,7 @@ insert into grupoetapa (idetapamenu,idalimento,nomenu) values (5,13,1);
 insert into grupoetapa (idetapamenu,idalimento,nomenu) values (5,14,1);
 insert into grupoetapa (idetapamenu,idalimento,nomenu) values (5,15,1);
 
-insert into menuusuario (idmenu,idusuario,fechacreacion) values (1,2,"2018-05-12 00:00:00");
+insert into menuusuario (idmenu,idusuario,fechacreacion) values (1,2,"2018-04-12 00:00:00");
+insert into alimentorestriccion(idalimento,idUsuario) values (1,2);
+insert into alimentorestriccion(idalimento,idUsuario) values (2,2);
 

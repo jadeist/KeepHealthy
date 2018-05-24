@@ -23,7 +23,9 @@
                     Nickname=request.getParameter("Nickname");                   
                     Usuario u=new Usuario();
                     u=UsuarioDao.getUsuarioByNickname(Nickname);
-                  if(u.getNickname()!= null){
+                  if(u.getNickname()!= null & u.getEstatus()==1){
+                      int idUsuario = u.getIdUsuario();
+                      java.util.Date FechaRegistro = u.getFechaRegistro();
                       //buscar si el usuairo tiene menu asignado en tabla MenuUsuario
                         out.println("<header id='navmain-header'>"
                                 +"<div class='container'>"
@@ -45,7 +47,7 @@
                                 +"</header>");
                       
                       MenuUsuario mu= new MenuUsuario();
-                      int idUsuario = u.getIdUsuario();
+                      
                       mu=MenuUsuarioDao.getMenuUsuarioByIdUsuario(idUsuario);
                       if(mu.getIdMenu()== 0){
                           //no tiene menu asignado para la semana
@@ -101,13 +103,29 @@
                                     +"	type: 'line',"
                                     +" "
                                     //+"	// The data for our dataset"
-                                    +"	data: {"
-                                    +"labels: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],"
+                                    +"	data: {");
+                                //primero muestro el peso inicial
+                                //de las semanas que encuentre muestro el peso registrado
+                                out.println("labels: ['Sem " + FechaRegistro +"'");
+                                List<HistorialPeso> listaHistorialPeso =  HistorialPesoDao.getAllHistorialPesobyidUsuario(idUsuario);
+                                for(HistorialPeso lhispeso:listaHistorialPeso){
+                                    out.println(",'Sem "+lhispeso.getFechaHistorial()+"'");                                        
+                                }
+                                out.println("],");
+                                //out.println("'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],"
+                                out.println(" "
                                     +"datasets: [{"
                                     +"	label: 'Progreso Semanal',"
                                     +"	backgroundColor: 'rgb(255, 99, 132)',"
                                     +"	borderColor: 'rgb(255, 99, 132)',"
-                                    +"	data: [0, 10, 5, 2, 20, 30, 45],"
+                                    +"	data: [");
+                                out.println(u.getPesoUsuario());
+                                List<HistorialPeso> listaHistorialPeso2 =  HistorialPesoDao.getAllHistorialPesobyidUsuario(idUsuario);
+                                for(HistorialPeso lhispeso2:listaHistorialPeso2){
+                                    out.println("," +lhispeso2.getPesoHistorial());                                        
+                                }
+                                //out.println("0, 10, 5, 2, 20, 30, 45");
+                                out.println("],"
                                     +"	}]"
                                     +"	},"
                                     +"  "
@@ -204,7 +222,7 @@
                                                       + "<input type='hidden' value='"+FechaCreacion +"' name='FechaCreacion'>"
                                     +"              <div class='row uniform 50%' style='padding-right:1.7em, padding-left:1.7em'>"
                                     +"			<div class='10u$ 12u$'>"
-                                    +"                  	<input type='text' name='Peso' placeholder='Peso perdido (ej. 5kg)'/>"
+                                    +"                  	<input type='text' name='Peso' placeholder='Peso actual (ej. 60kg)'/>"
                                     +"			</div>"
                                     +"			<br>"
                                     +"			<div style='display: run-in'>"
@@ -259,13 +277,29 @@
         	+"	type: 'line',"
                 +" "
         	//+"	// The data for our dataset"
-        	+"	data: {"
-            	+"labels: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],"
+        	+"	data: {");
+                //primero muestro el peso inicial
+                //de las semanas que encuentre muestro el peso registrado
+            	out.println("labels: ['Sem " + FechaRegistro +"'");
+                List<HistorialPeso> listaHistorialPeso =  HistorialPesoDao.getAllHistorialPesobyidUsuario(idUsuario);
+                for(HistorialPeso lhispeso:listaHistorialPeso){
+                    out.println(",'Sem "+lhispeso.getFechaHistorial()+"'");                                        
+                }
+                out.println("],");
+                //out.println("'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],"
+                out.println(" "
             	+"datasets: [{"
                 +"	label: 'Progreso Semanal',"
                 +"	backgroundColor: 'rgb(255, 99, 132)',"
                 +"	borderColor: 'rgb(255, 99, 132)',"
-                +"	data: [0, 10, 5, 2, 20, 30, 45],"
+                +"	data: [");
+                out.println(u.getPesoUsuario());
+                List<HistorialPeso> listaHistorialPeso2 =  HistorialPesoDao.getAllHistorialPesobyidUsuario(idUsuario);
+                for(HistorialPeso lhispeso2:listaHistorialPeso2){
+                    out.println("," +lhispeso2.getPesoHistorial());                                        
+                }
+                //out.println("0, 10, 5, 2"); //, 20, 30, 45");
+                out.println("],"
             	+"	}]"
         	+"	},"
                 //+"  "

@@ -80,7 +80,67 @@ public class AlimentoDao {
         }
         return a;
     }
-          
+     
+     public static  Alimento getAlientoByNombre (String nombre) throws SQLException{
+        
+        Alimento a=new Alimento();
+        
+        
+        try{
+            Connection con=AlimentoDao.getConnection();
+            String q;
+            q="Select * from Alimento where NombreAlimento=?";
+
+            PreparedStatement ps =con.prepareStatement(q);
+
+            ps.setString(1, nombre);
+
+            ResultSet rs=ps.executeQuery();
+
+            if(rs.next()){
+                a.setIdAlimento(rs.getInt(1));
+                a.setIdCategoria(rs.getInt(2));
+                a.setNombreAlimento(rs.getString(3));
+                a.setPorcion(rs.getString(4));
+                a.setCalorias(rs.getFloat(5));
+            }
+            con.close();
+                
+        }catch(Exception d){
+            System.out.println("Error");
+            System.out.println(d.getMessage());
+            System.out.println(d.getStackTrace());
+        }
+        return a;
+    }
+      public static int Eliminar(int id) throws SQLException{
+        
+        int estatus=0;
+        
+        /*Es necesrio contar con un estado
+        de la tabla de la bd para saber si el empleado
+        que voy a registrar es nuevo o no */
+        try{
+        Connection con=AlimentoDao.getConnection();
+        String q;
+        q="delete from Alimento where IdAlimento=? ";
+        
+        PreparedStatement ps =con.prepareStatement(q);
+        
+        ps.setInt(1,id);
+        
+        estatus=ps.executeUpdate();
+        con.close();
+        
+        
+        }catch(Exception d){
+            System.out.println("Error");
+            System.out.println(d.getMessage());
+            System.out.println(d.getStackTrace());
+        }
+        return estatus;
+    }
+      
     public static List<Alimento> getAllAlimentosByCategoria(int idCategoria) throws SQLException{
         
         List<Alimento> lista =new ArrayList<Alimento>();

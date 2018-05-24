@@ -28,6 +28,38 @@
         <servlet-name>ValidaEdicionUsuarioServlet</servlet-name>
         <servlet-class>Servlets.ValidaEdicionUsuarioServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CrearMenuServlet</servlet-name>
+        <servlet-class>Servlets.CrearMenuServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ValidaMenuServlet</servlet-name>
+        <servlet-class>Servlets.ValidaMenuServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarUsuarioAdminServlet</servlet-name>
+        <servlet-class>Servlets.EditarUsuarioAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BorrarUsuarioAdminServlet</servlet-name>
+        <servlet-class>Servlets.BorrarUsuarioAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReactivarUsuarioAdminServlet</servlet-name>
+        <servlet-class>Servlets.ReactivarUsuarioAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ValidaEdicionUsuarioAdminServlet</servlet-name>
+        <servlet-class>Servlets.ValidaEdicionUsuarioAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AgregarAlimentoAdminServlet</servlet-name>
+        <servlet-class>Servlets.AgregarAlimentoAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BorrarAlimentoServlet</servlet-name>
+        <servlet-class>Servlets.BorrarAlimentoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistrarUsuarioServlet</servlet-name>
         <url-pattern>/RegistrarUsuarioServlet</url-pattern>
@@ -55,6 +87,38 @@
     <servlet-mapping>
         <servlet-name>ValidaEdicionUsuarioServlet</servlet-name>
         <url-pattern>/ValidaEdicionUsuarioServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrearMenuServlet</servlet-name>
+        <url-pattern>/CrearMenuServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ValidaMenuServlet</servlet-name>
+        <url-pattern>/ValidaMenuServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarUsuarioAdminServlet</servlet-name>
+        <url-pattern>/EditarUsuarioAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BorrarUsuarioAdminServlet</servlet-name>
+        <url-pattern>/BorrarUsuarioAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReactivarUsuarioAdminServlet</servlet-name>
+        <url-pattern>/ReactivarUsuarioAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ValidaEdicionUsuarioAdminServlet</servlet-name>
+        <url-pattern>/ValidaEdicionUsuarioAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarAlimentoAdminServlet</servlet-name>
+        <url-pattern>/AgregarAlimentoAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BorrarAlimentoServlet</servlet-name>
+        <url-pattern>/BorrarAlimentoServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

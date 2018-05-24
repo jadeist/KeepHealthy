@@ -56,7 +56,7 @@ public class ValidarUsuarioServlet extends HttpServlet {
             
                 u=UsuarioDao.VerificarUsuario(Nickname,Contrasena);
 
-                if((u.getNickname())!=null){                    
+                if((u.getNickname())!=null & u.getEstatus()==1){                    
                     //usuario existente 
                     int idUsuario = u.getIdUsuario();
                     java.util.Date d = new java.util.Date();   
@@ -87,8 +87,16 @@ public class ValidarUsuarioServlet extends HttpServlet {
                         +"<div class='inner'>"
                         +"<header class='major narrow'>"
                         +"<h2>Bienvenido "+Nickname+"</h2>"
-                        +"</header>"
-                        +"<form action='inicio.jsp' method='POST'>"
+                        +"</header>");
+                    if (u.getIdperfil()==1){
+                        out.println(" "     
+                            +"<form action='inicioAdmin.jsp' method='POST'>");
+                    }
+                    else{
+                        out.println(" "     
+                            +"<form action='inicio.jsp' method='POST'>");
+                    }
+                    out.println(" "
                         +"<div class='container 75%'>"
                         +"<div class='row uniform 50%'>"
                         +"<div class='6u 12u(xsmall)'>"

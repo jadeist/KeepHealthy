@@ -36,7 +36,7 @@ public class RestriccionesServlet extends HttpServlet {
 
             u=UsuarioDao.getUsuarioByNickname(Nickname);
 
-            if((u.getNickname())!=null){
+            if((u.getNickname())!=null & u.getEstatus()==1){
                 int idUsuario = u.getIdUsuario();
                 out.println("<html>" 
                             +"<head>"

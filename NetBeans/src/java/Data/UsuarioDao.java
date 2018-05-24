@@ -60,7 +60,7 @@ public class UsuarioDao {
         try{
         Connection con=UsuarioDao.getConnection();
         String q;
-        q="insert into Usuario(Nickname, Contrasena , idperfil, nombreUsuario, idsexo , FechaNacimiento, pesoUsuario, Estatura, Ocupacion, idActividad, FechaRegistro, FechaUltVez , CaloriasDiarias ) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        q="insert into Usuario(Nickname, Contrasena , idperfil, nombreUsuario, idsexo , FechaNacimiento, pesoUsuario, Estatura, Ocupacion, idActividad, FechaRegistro, FechaUltVez , CaloriasDiarias, Estatus ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         
         PreparedStatement ps =con.prepareStatement(q);
         
@@ -77,6 +77,7 @@ public class UsuarioDao {
         ps.setDate(11,u.getFechaRegistro());
         ps.setDate(12,u.getFechaUltVez());
         ps.setFloat(13,u.getCaloriasDiarias());
+        ps.setInt(14,u.getEstatus());
         
         estatus=ps.executeUpdate();
         con.close();
@@ -112,7 +113,8 @@ public class UsuarioDao {
               + "idActividad=?,"
               + "FechaRegistro=?,"
               + "FechaUltVez=?,"
-              + "CaloriasDiarias=? "
+              + "CaloriasDiarias=?, "
+              + "Estatus= ? "
               + "where idUsuario=?";
         PreparedStatement ps =con.prepareStatement(q);
 
@@ -129,7 +131,8 @@ public class UsuarioDao {
         ps.setDate(11,u.getFechaRegistro());
         ps.setDate(12,u.getFechaUltVez());
         ps.setFloat(13,u.getCaloriasDiarias());
-        ps.setInt(14,u.getIdUsuario());
+        ps.setInt(14,u.getEstatus());
+        ps.setInt(15,u.getIdUsuario());
         
         estatus=ps.executeUpdate();
         con.close();
@@ -174,42 +177,40 @@ public class UsuarioDao {
      public static  Usuario getUsuarioById (int id) throws SQLException{
         
         Usuario u=new Usuario();
-        
-        
-        /*Es necesrio contar con un estado
-        de la tabla de la bd para saber si el empleado
-        que voy a registrar es nuevo o no */
+
         try{
-        Connection con=UsuarioDao.getConnection();
-        String q;
-        q="Select idUsuario, Nickname, Contrasena, IdPerfil, NombreUsuario, IdSexo, FechaNacimiento, PesoUsuario, Estatura, Ocupacion, IdActividad, FechaRegistro, FechaUltVez, CaloriasDiarias from Usuario where id_Usuario=?";
-        
-        PreparedStatement ps =con.prepareStatement(q);
-        
-        ps.setInt(1, id);
-        
-        ResultSet rs=ps.executeQuery();
-        
-        if(rs.next()){
-            u.setIdUsuario(rs.getInt(1));
-            u.setNickname(rs.getString(2));
-            u.setContrasena(rs.getString(3));
-            u.setIdperfil(rs.getInt(4));
-            u.setNombreUsuario(rs.getString(5));
-            u.setIdsexo(rs.getInt(6));
-            u.setFechaNacimiento(rs.getDate(7));
-            u.setPesoUsuario(rs.getFloat(8));
-            u.setEstatura(rs.getFloat(9));
-            u.setOcupacion(rs.getString(10));
-            u.setIdActividad(rs.getInt(11));
-            u.setFechaRegistro(rs.getDate(12));
-            u.setFechaUltVez(rs.getDate(13));
-            u.setCaloriasDiarias(rs.getFloat(14));
-            
-        }
-        
-        
-        con.close();
+            Connection con=UsuarioDao.getConnection();
+            String q;
+            q="Select idUsuario, Nickname, Contrasena, IdPerfil, NombreUsuario, IdSexo, FechaNacimiento, PesoUsuario, Estatura, Ocupacion, IdActividad, FechaRegistro, FechaUltVez, CaloriasDiarias, Estatus from Usuario where idUsuario=?";
+
+            PreparedStatement ps =con.prepareStatement(q);
+
+            ps.setInt(1, id);
+
+            ResultSet rs=ps.executeQuery();
+
+            if(rs.next()){
+                u.setIdUsuario(rs.getInt(1));
+                u.setNickname(rs.getString(2));
+                u.setContrasena(rs.getString(3));
+                u.setIdperfil(rs.getInt(4));
+                u.setNombreUsuario(rs.getString(5));
+                u.setIdsexo(rs.getInt(6));
+                u.setFechaNacimiento(rs.getDate(7));
+                u.setPesoUsuario(rs.getFloat(8));
+                u.setEstatura(rs.getFloat(9));
+                u.setOcupacion(rs.getString(10));
+                u.setIdActividad(rs.getInt(11));
+                u.setFechaRegistro(rs.getDate(12));
+                u.setFechaUltVez(rs.getDate(13));
+                u.setCaloriasDiarias(rs.getFloat(14));
+                u.setEstatus(rs.getInt(15));            
+            }
+            else{
+                u.setEstatus(0);
+            }
+
+            con.close();
         
         
         }catch(Exception d){
@@ -231,7 +232,7 @@ public class UsuarioDao {
         try{
         Connection con=UsuarioDao.getConnection();
         String q;
-        q="Select idUsuario,Nickname,Contrasena,IdPerfil,NombreUsuario,IdSexo,FechaNacimiento,PesoUsuario,Estatura,Ocupacion,IdActividad,FechaRegistro,FechaUltVez,CaloriasDiarias from Usuario where Nickname=?";
+        q="Select idUsuario,Nickname,Contrasena,IdPerfil,NombreUsuario,IdSexo,FechaNacimiento,PesoUsuario,Estatura,Ocupacion,IdActividad,FechaRegistro,FechaUltVez,CaloriasDiarias,Estatus from Usuario where Nickname=?";
         
         PreparedStatement ps =con.prepareStatement(q);
         
@@ -255,7 +256,7 @@ public class UsuarioDao {
             u.setFechaRegistro(rs.getDate(12));
             u.setFechaUltVez(rs.getDate(13));
             u.setCaloriasDiarias(rs.getFloat(14));
-            
+            u.setEstatus(rs.getInt(15));            
         }
         else{
             out.println("usuario no encontrado");
@@ -284,7 +285,7 @@ public class UsuarioDao {
         try{
         Connection con=UsuarioDao.getConnection();
         String q;
-        q="Select *from Usuario ";
+        q="Select IdUsuario,Nickname,Contrasena,IdPerfil,NombreUsuario,IdSexo,FechaNacimiento,PesoUsuario,Estatura,Ocupacion,IdActividad,FechaRegistro,FechaUltVez,CaloriasDiarias,Estatus from Usuario ";
         
         PreparedStatement ps =con.prepareStatement(q);
         
@@ -306,6 +307,7 @@ public class UsuarioDao {
                 u.setFechaRegistro(rs.getDate(12));
                 u.setFechaUltVez(rs.getDate(13));
                 u.setCaloriasDiarias(rs.getFloat(14));
+                u.setEstatus(rs.getInt(15));
                lista.add(u);
         }
         
@@ -332,7 +334,7 @@ public class UsuarioDao {
         try{
         Connection con=UsuarioDao.getConnection();
         String q;
-        q="Select idUsuario,Nickname, Contrasena , idperfil, NombreUsuario, idsexo , FechaNacimiento, pesoUsuario, Estatura, Ocupacion, idActividad, FechaRegistro, FechaUltVez , CaloriasDiarias from Usuario where Nickname=? and Contrasena=?";
+        q="Select idUsuario,Nickname, Contrasena , idperfil, NombreUsuario, idsexo , FechaNacimiento, pesoUsuario, Estatura, Ocupacion, idActividad, FechaRegistro, FechaUltVez , CaloriasDiarias, Estatus from Usuario where Nickname=? and Contrasena=?";
         
         PreparedStatement ps =con.prepareStatement(q);
         
@@ -356,6 +358,7 @@ public class UsuarioDao {
             u.setFechaRegistro(rs.getDate(12));
             u.setFechaUltVez(rs.getDate(13));
             u.setCaloriasDiarias(rs.getFloat(14));
+            u.setEstatus(rs.getInt(15));
         }else{
             u.setIdUsuario(0);
         }

@@ -21,7 +21,7 @@
                 Nickname=request.getParameter("Nickname");                   
                 Usuario u=new Usuario();
                 u=UsuarioDao.getUsuarioByNickname(Nickname);
-                if(u.getNickname()!= null){
+                if(u.getNickname()!= null & u.getEstatus()==1){
                     
                     String Nombre = u.getNombreUsuario();
                     Float Estatura = u.getEstatura();

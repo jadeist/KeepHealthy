@@ -36,7 +36,7 @@ public class EditarPerfilServlet extends HttpServlet {
 
             u=UsuarioDao.getUsuarioByNickname(Nickname);
 
-            if((u.getNickname())!=null){
+            if((u.getNickname())!=null & u.getEstatus()==1){
                 
                 int idUsuario = u.getIdUsuario();
                 out.println("<html>" 
@@ -84,7 +84,7 @@ public class EditarPerfilServlet extends HttpServlet {
                         + "<table border='1'>"
                         + "<tr><td>Nickname :<input name='Nickname' value='"+Nickname+"' type='text' readonly></td></tr>"
                          + "<tr><td>Nombre :<input name='Nombre' value='"+Nombre+"' type='text'></td></tr>"
-                         + "<tr><td>Peso :<input name='Peso' value='"+Peso+"' type='text'></td></tr>"
+                         + "<tr><td>Peso :<input name='Peso' value='"+Peso+"' readonly type='text'></td></tr>"
                          + "<tr><td>Estatura :<input name='Estatura' value='"+Estatura+"' type='text'></td></tr>"
                          + "<tr><td>Ocupacion :<input name='Ocupacion' value='"+Ocupacion+"' type='text'></td></tr>"                                               
                         + "</table>"

@@ -49,7 +49,7 @@ public class ValidaEdicionUsuarioServlet extends HttpServlet {
             
             u=UsuarioDao.getUsuarioByNickname(Nickname);
 
-            if((u.getNickname())==null){
+            if((u.getNickname())==null & u.getEstatus()==1){
               
                 out.println("<html>");
                 out.println("<head>");
@@ -130,6 +130,7 @@ public class ValidaEdicionUsuarioServlet extends HttpServlet {
 
                     int Edad= calculaEdad(datesqlFechaNacimiento);
                     idSexo = u.getIdsexo();
+                    
                     //CaloriasDiarias
                     CaloriasDiarias = CalculaHarrisBenedict(pesoUsuario, Estatura, idSexo, idActividad, Edad);
 //                        out.println("id CaloriasDiarias: " +CaloriasDiarias);

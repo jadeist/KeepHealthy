@@ -52,7 +52,7 @@
                         
                         Usuario u=new Usuario();
                         u=UsuarioDao.getUsuarioByNickname(Nickname);
-                        if(u.getNickname()!= null){
+                        if(u.getNickname()!= null & u.getEstatus()==1){
                           //buscar si el usuairo tiene menu asignado en tabla MenuUsuario
                           out.println(" <section>"
                                         +"<div class='row' style='margin: 1em; padding: 2em;'>"
@@ -132,12 +132,18 @@
                                     +"</div>"
                                     +"</div>");			
                             }
+                            //boton para crear menu
+
                             //aqui se deben desplegar los alimentos restriccion por este usuario
                             
                             List<AlimentoRestriccion> listaAlimentoRestriccion =  AlimentoRestriccionDao.getAllAlimentoRestriccionByIdUsuario(idUsuario);
                             
                             out.println("<div class='6u$ 12u$(xsmall)'>"
                                         +"<div style='margin: 1em; padding: 2em;'>"
+                                        + "<form action='CrearMenuServlet' method='POST'>"
+                                        + "<input type='hidden' value='"+Nickname+"' name='Nickname'>"
+                                        + "<input type='submit'  class='special' value='Crea tu menu'>"
+                                        + "</form>"
                                         + "<form action='RestriccionesServlet' method='POST'>"
                                         + "<input type='hidden' value='"+Nickname+"' name='Nickname'>"
                                         + "<input type='submit'  class='special' value='Editar Alimentos Restringidos'>"
